@@ -32,7 +32,7 @@ class UserInfo extends React.Component {
         />
         <div className="user-detail">
           <h4 className="user-name" onClick={this.handleClick}>
-            ลิโอเนล เมสซี่{" "}
+            {this.props.user && this.props.user.username}
             <i className="zmdi zmdi-caret-down zmdi-hc-fw align-middle" />
           </h4>
         </div>
@@ -74,8 +74,17 @@ class UserInfo extends React.Component {
   }
 }
 
-const mapStateToProps = ({ settings }) => {
-  const { locale } = settings;
-  return { locale };
+// const mapStateToProps = ({ settings, auth }) => {
+//   const { locale } = settings;
+//   const { user } = auth.user;
+//   return { locale };
+// };
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.authUser,
+    locale: state.settings,
+  };
 };
+
 export default connect(mapStateToProps, { userSignOut })(UserInfo);

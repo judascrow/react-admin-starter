@@ -73,6 +73,10 @@ class App extends React.Component {
                   )}
                 />
                 <Route
+                  path={`${match.url}/users`}
+                  component={asyncComponent(() => import("./routes/Users"))}
+                />
+                <Route
                   component={asyncComponent(() =>
                     import("components/Error404")
                   )}

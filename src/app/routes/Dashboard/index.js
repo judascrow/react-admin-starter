@@ -16,7 +16,7 @@ const Dashboard = (props) => {
       <div className="dashboard animated slideInUpTiny animation-duration-3">
         <ContainerHeader
           match={props.match}
-          title={<IntlMessages id="sidebar.dashboard.news" />}
+          title={<IntlMessages id="pages.dashboard" />}
         />
 
         <div className="row">
