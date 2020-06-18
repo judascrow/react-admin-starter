@@ -45,18 +45,19 @@ const Users = (props) => {
         <div>
           <UserTable />
         </div>
-        <Tooltip title="เพิ่มผู้ใช้งาน" aria-label="Add">
-          <Fab
-            color="primary"
-            aria-label="Add"
-            className={classes.fab}
-            onClick={handleClickOpen}
-          >
-            <AddIcon />
-          </Fab>
-        </Tooltip>
+
         <UserAddModal handleClose={handleClose} open={open} />
       </div>
+      <Tooltip title="เพิ่มผู้ใช้งาน" aria-label="Add">
+        <Fab
+          color="primary"
+          aria-label="Add"
+          className={classes.fab}
+          onClick={handleClickOpen}
+        >
+          <AddIcon />
+        </Fab>
+      </Tooltip>
     </div>
   );
 };
