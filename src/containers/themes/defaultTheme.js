@@ -1,5 +1,5 @@
 import indigo from "@material-ui/core/colors/indigo";
-import green from "@material-ui/core/colors/green";
+import pink from "@material-ui/core/colors/pink";
 
 export default {
   palette: {
@@ -10,9 +10,9 @@ export default {
       contrastText: "#fff",
     },
     secondary: {
-      light: green[300],
-      main: green[700],
-      dark: green[700],
+      light: pink[300],
+      main: pink[500],
+      dark: pink[700],
       contrastText: "#fff",
     },
   },

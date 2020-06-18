@@ -574,5 +574,9 @@
   "dashboard.weekly": "Weekly",
 
   "users.main": "ผู้ใช้งาน",
-  "users.main.description": "จัดการผู้ใช้งาน"
+  "users.main.description": "จัดการผู้ใช้งาน",
+  "users.addUser": "เพิ่มผู้ใช้งาน",
+  "users.save": "บันทึกข้อมูล",
+  "users.saveUser": "บันทึกข้อมูลผู้ใช้งาน",
+  "users.cancel": "ยกเลิก"
 }

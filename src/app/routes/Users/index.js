@@ -1,19 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { Link, withRouter } from "react-router-dom";
-import { connect } from "react-redux";
-import ContainerHeader from "components/ContainerHeader/index";
-import IntlMessages from "util/IntlMessages";
-import PropTypes from "prop-types";
+import React from "react";
 
-import { getUsers } from "../../../actions/User";
-
-import MaterialTable from "material-table";
-import CircularProgress from "components/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
-import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import Tooltip from "@material-ui/core/Tooltip";
-import Chip from "@material-ui/core/Chip";
+import Fab from "@material-ui/core/Fab";
+import ContainerHeader from "components/ContainerHeader/index";
+import IntlMessages from "util/IntlMessages";
+
+import UserTable from "./UserTable";
+import UserAddModal from "./UserAddModal";
 
 const useStyles = makeStyles((theme) => ({
   titleIcon: {
@@ -29,61 +24,16 @@ const useStyles = makeStyles((theme) => ({
 
 const Users = (props) => {
   const classes = useStyles();
-  const { getUsers, user } = props;
-  const { users, loading } = user;
 
-  useEffect(() => {
-    getUsers();
-  }, [getUsers]);
+  const [open, setOpen] = React.useState(false);
 
-  const onEdit = () => {};
-  const onDelete = () => {};
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
-  const [state] = useState({
-    columns: [
-      { title: "Username", field: "username" },
-      {
-        title: "Full Name",
-        field: "first_name",
-        render: (rowData) => rowData.firstName + " " + rowData.lastName,
-      },
-      { title: "Court", field: "court.name" },
-      {
-        title: "Status",
-        field: "status",
-        render: (rowData) =>
-          rowData.status === "A" ? (
-            <Chip label="Active" color="secondary" size="small" />
-          ) : (
-            <Chip label="Inactive" size="small" />
-          ),
-      },
-    ],
-    actions: [
-      {
-        icon: "edit",
-        iconProps: { color: "primary" },
-        tooltip: "แก้ไขผู้ใช้งาน",
-        onClick: (event, rowData) => onEdit(rowData),
-      },
-      (rowData) => ({
-        icon: "delete",
-        iconProps: { color: "error" },
-        tooltip: "ลบผู้ใช้งาน",
-        onClick: (event, rowData) => onDelete(rowData),
-      }),
-    ],
-    options: {
-      showTitle: false,
-      actionsColumnIndex: -1,
-      pageSize: 10,
-      headerStyle: {
-        backgroundColor: "#1769aa",
-        color: "#fff",
-      },
-      padding: "dense",
-    },
-  });
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <div className="app-wrapper">
@@ -93,40 +43,22 @@ const Users = (props) => {
           title={<IntlMessages id="users.main" />}
         />
         <div>
-          {users !== null && !loading ? (
-            <MaterialTable
-              columns={state.columns}
-              data={users.data}
-              actions={state.actions}
-              options={state.options}
-            />
-          ) : (
-            <CircularProgress />
-          )}
-          <Tooltip title="เพิ่มผู้ใช้งาน" aria-label="Add">
-            <Fab
-              color="primary"
-              aria-label="Add"
-              className={classes.fab}
-              component={Link}
-              to="/users/add"
-            >
-              <AddIcon />
-            </Fab>
-          </Tooltip>
+          <UserTable />
         </div>
+        <Tooltip title="เพิ่มผู้ใช้งาน" aria-label="Add">
+          <Fab
+            color="primary"
+            aria-label="Add"
+            className={classes.fab}
+            onClick={handleClickOpen}
+          >
+            <AddIcon />
+          </Fab>
+        </Tooltip>
+        <UserAddModal handleClose={handleClose} open={open} />
       </div>
     </div>
   );
 };
 
-Users.propTypes = {
-  getUsers: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  user: state.user,
-});
-
-export default connect(mapStateToProps, { getUsers })(withRouter(Users));
+export default Users;
