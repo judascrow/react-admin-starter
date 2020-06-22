@@ -1,4 +1,4 @@
-import { INIT_URL, GET_USERS } from "../constants/ActionTypes";
+import { INIT_URL, GET_USERS, ADD_USER } from "../constants/ActionTypes";
 
 const INIT_STATE = {
   initURL: "",
@@ -16,7 +16,6 @@ export default (state = INIT_STATE, action) => {
       return { ...state, initURL: payload };
     }
     case GET_USERS: {
-      console.log(type);
       return {
         ...state,
         users: payload,
@@ -24,6 +23,12 @@ export default (state = INIT_STATE, action) => {
         loading: false,
       };
     }
+    case ADD_USER:
+      return {
+        ...state,
+        users: [payload, ...state.users],
+        loading: false,
+      };
     default:
       return state;
   }

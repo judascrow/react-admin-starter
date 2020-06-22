@@ -46,7 +46,7 @@ const Users = (props) => {
           <UserTable />
         </div>
 
-        <UserAddModal handleClose={handleClose} open={open} />
+        <UserAddModal handleClose={handleClose} open={open} user={null} />
       </div>
       <Tooltip title="เพิ่มผู้ใช้งาน" aria-label="Add">
         <Fab

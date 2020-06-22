@@ -5,6 +5,7 @@ import {
   INIT_URL,
   USER_DATA,
   GET_USERS,
+  ADD_USER,
 } from "../constants/ActionTypes";
 import axios from "util/Api";
 
@@ -44,12 +45,12 @@ export const getUsers = () => async (dispatch) => {
   try {
     const config = {
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Type": "application/json",
         Authorization: localStorage.getItem("token"),
       },
     };
 
-    const res = await axios.get(`users?spageSize=500`, config);
+    const res = await axios.get(`users?pageSize=500`, config);
 
     dispatch({
       type: GET_USERS,
@@ -62,6 +63,33 @@ export const getUsers = () => async (dispatch) => {
       dispatch({
         type: FETCH_ERROR,
         payload: errors.message,
+      });
+    }
+  }
+};
+
+export const createUser = (user) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token"),
+      },
+    };
+
+    const res = await axios.post(`users`, user, config);
+    console.log(res.data);
+    dispatch({
+      type: ADD_USER,
+      payload: res.data,
+    });
+  } catch (err) {
+    const errors = err.response.data;
+
+    if (errors) {
+      dispatch({
+        type: FETCH_ERROR,
+        error: errors.message,
       });
     }
   }

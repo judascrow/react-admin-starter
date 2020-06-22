@@ -1,22 +1,27 @@
-import React from 'react';
+import React from "react";
 import CircularProgress from "components/CircularProgress/index";
-import Snackbar from '@material-ui/core/Snackbar';
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
 import Auxiliary from "util/Auxiliary";
-import {connect} from "react-redux";
-import {hideMessage} from "actions/Common";
+import { connect } from "react-redux";
+import { hideMessage } from "actions/Common";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 class InfoView extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.error || nextProps.message) {
       setTimeout(() => {
         this.props.hideMessage();
-      }, 3000);
+      }, 5000);
     }
   }
 
   render() {
-    const {error, loading, message} = this.props;
-    const open = error !== '' || message !== '';
+    const { error, loading, message } = this.props;
+    const open = error !== "" || message !== "";
     let showMessage = message;
     if (error) {
       showMessage = error;
@@ -26,27 +31,33 @@ class InfoView extends React.Component {
 
     return (
       <Auxiliary>
-        {loading && <div className="loader-view">
-          <CircularProgress/>
-        </div>}
+        {loading && (
+          <div className="loader-view">
+            <CircularProgress />
+          </div>
+        )}
 
         <Snackbar
-          anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
           open={open}
-          autoHideDuration={3000}
-          ContentProps={{
-            'aria-describedby': 'message-id',
-          }}
-          message={<span id="message-id">{showMessage}</span>}
-        />
+          autoHideDuration={5000}
+          // ContentProps={{
+          //   "aria-describedby": "message-id",
+          // }}
+          // message={<span id="message-id">{showMessage}</span>}
+        >
+          <Alert severity="error">
+            <span id="message-id">{showMessage}</span>
+          </Alert>
+        </Snackbar>
       </Auxiliary>
     );
   }
 }
 
-const mapStateToProps = ({commonData}) => {
-  const {error, loading, message} = commonData;
-  return {error, loading, message};
+const mapStateToProps = ({ commonData }) => {
+  const { error, loading, message } = commonData;
+  return { error, loading, message };
 };
 
-export default connect(mapStateToProps, {hideMessage})(InfoView);
+export default connect(mapStateToProps, { hideMessage })(InfoView);
