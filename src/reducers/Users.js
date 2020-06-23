@@ -1,4 +1,10 @@
-import { INIT_URL, GET_USERS, ADD_USER } from "../constants/ActionTypes";
+import {
+  INIT_URL,
+  GET_USERS,
+  ADD_USER,
+  UPDATE_USER,
+  DELETE_USER,
+} from "../constants/ActionTypes";
 
 const INIT_STATE = {
   initURL: "",
@@ -18,7 +24,7 @@ export default (state = INIT_STATE, action) => {
     case GET_USERS: {
       return {
         ...state,
-        users: payload,
+        users: payload.data,
         userdata: "",
         loading: false,
       };
@@ -26,7 +32,21 @@ export default (state = INIT_STATE, action) => {
     case ADD_USER:
       return {
         ...state,
-        users: [payload, ...state.users],
+        users: [...state.users, payload],
+        loading: false,
+      };
+    case UPDATE_USER:
+      return {
+        ...state,
+        users: state.users.map((user) =>
+          user.slug === payload.slug ? payload : user
+        ),
+        loading: false,
+      };
+    case DELETE_USER:
+      return {
+        ...state,
+        users: state.users.filter((user) => user.slug !== payload),
         loading: false,
       };
     default:

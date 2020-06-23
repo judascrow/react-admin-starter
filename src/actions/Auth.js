@@ -89,7 +89,7 @@ export const getUser = () => {
         console.log("userMe: ", data);
         if (data) {
           dispatch({ type: FETCH_SUCCESS });
-          dispatch({ type: USER_DATA, payload: data.data.user });
+          dispatch({ type: USER_DATA, payload: data.data });
         } else {
           dispatch({ type: FETCH_ERROR, payload: data.error });
         }

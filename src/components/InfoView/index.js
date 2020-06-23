@@ -41,12 +41,13 @@ class InfoView extends React.Component {
           anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
           open={open}
           autoHideDuration={5000}
+          TransitionComponent="fade"
           // ContentProps={{
           //   "aria-describedby": "message-id",
           // }}
           // message={<span id="message-id">{showMessage}</span>}
         >
-          <Alert severity="error">
+          <Alert severity={error ? "error" : "success"}>
             <span id="message-id">{showMessage}</span>
           </Alert>
         </Snackbar>

@@ -6,6 +6,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Fab from "@material-ui/core/Fab";
 import ContainerHeader from "components/ContainerHeader/index";
 import IntlMessages from "util/IntlMessages";
+import InfoView from "components/InfoView";
 
 import UserTable from "./UserTable";
 import UserAddModal from "./UserAddModal";
@@ -48,6 +49,7 @@ const Users = (props) => {
 
         <UserAddModal handleClose={handleClose} open={open} user={null} />
       </div>
+      <InfoView />
       <Tooltip title="เพิ่มผู้ใช้งาน" aria-label="Add">
         <Fab
           color="primary"

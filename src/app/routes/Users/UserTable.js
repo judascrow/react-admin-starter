@@ -8,18 +8,33 @@ import Chip from "@material-ui/core/Chip";
 
 import CircularProgress from "components/CircularProgress";
 
-import { getUsers } from "actions/User";
+import { getUsers, deleteUser } from "actions/User";
+
+import UserAddModal from "./UserAddModal";
 
 const UserTable = (props) => {
-  const { getUsers, user } = props;
+  const [open, setOpen] = React.useState(false);
+  const [userData, setUserData] = React.useState(null);
+
+  const { getUsers, user, deleteUser } = props;
   const { users, loading } = user;
 
   useEffect(() => {
     getUsers();
   }, [getUsers]);
 
-  const onEdit = () => {};
-  const onDelete = () => {};
+  const onEdit = (rowData) => {
+    setOpen(true);
+    setUserData(rowData);
+  };
+  const onDelete = (rowData) => {
+    console.log(rowData.slug);
+    deleteUser(rowData.slug);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const [columns] = useState([
     { title: "ชื่อผู้ใช้งาน", field: "username" },
@@ -83,7 +98,9 @@ const UserTable = (props) => {
       icon: "delete",
       iconProps: { color: "error" },
       tooltip: "ลบผู้ใช้งาน",
-      onClick: (event, rowData) => onDelete(rowData),
+      onClick: (event, rowData) =>
+        window.confirm("Are you sure you wish to delete this item?") &&
+        onDelete(rowData),
     }),
   ]);
 
@@ -103,13 +120,14 @@ const UserTable = (props) => {
       {users !== null && !loading ? (
         <MaterialTable
           columns={columns}
-          data={users.data}
+          data={users}
           actions={actions}
           options={options}
         />
       ) : (
         <CircularProgress />
       )}
+      <UserAddModal handleClose={handleClose} open={open} user={userData} />
     </div>
   );
 };
@@ -117,10 +135,13 @@ const UserTable = (props) => {
 UserTable.propTypes = {
   getUsers: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
+  deleteUser: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps, { getUsers })(withRouter(UserTable));
+export default connect(mapStateToProps, { getUsers, deleteUser })(
+  withRouter(UserTable)
+);

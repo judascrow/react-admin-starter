@@ -1,11 +1,11 @@
 import {
   FETCH_ERROR,
-  FETCH_START,
-  FETCH_SUCCESS,
   INIT_URL,
-  USER_DATA,
   GET_USERS,
   ADD_USER,
+  SHOW_MESSAGE,
+  UPDATE_USER,
+  DELETE_USER,
 } from "../constants/ActionTypes";
 import axios from "util/Api";
 
@@ -13,30 +13,6 @@ export const setInitUrl = (url) => {
   return {
     type: INIT_URL,
     payload: url,
-  };
-};
-
-export const getUsersOld = () => {
-  return (dispatch) => {
-    dispatch({ type: FETCH_START });
-    axios.defaults.headers.common["Authorization"] = localStorage.getItem(
-      "token"
-    );
-    axios
-      .get("users")
-      .then(({ data }) => {
-        console.log("users: ", data);
-        if (data) {
-          dispatch({ type: FETCH_SUCCESS });
-          dispatch({ type: USER_DATA, payload: data.data });
-        } else {
-          dispatch({ type: FETCH_ERROR, payload: data.error });
-        }
-      })
-      .catch(function(error) {
-        dispatch({ type: FETCH_ERROR, payload: error.message });
-        console.log("Error****:", error.message);
-      });
   };
 };
 
@@ -69,28 +45,103 @@ export const getUsers = () => async (dispatch) => {
 };
 
 export const createUser = (user) => async (dispatch) => {
-  try {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: localStorage.getItem("token"),
-      },
-    };
+  return await axios
+    .post(`users`, user)
+    .then((res) => {
+      if (res.status === 201) {
+        const data = res.data;
+        dispatch({
+          type: ADD_USER,
+          payload: data.data,
+        });
+        dispatch({
+          type: SHOW_MESSAGE,
+          payload: data.message,
+        });
+        return data;
+      }
+    })
+    .catch((err) => {
+      if (err.response) {
+        const errors = err.response.data;
 
-    const res = await axios.post(`users`, user, config);
-    console.log(res.data);
-    dispatch({
-      type: ADD_USER,
-      payload: res.data,
+        if (errors) {
+          dispatch({
+            type: FETCH_ERROR,
+            // error: errors.message,
+            payload: errors.message,
+          });
+        }
+      }
+
+      console.log(err);
     });
-  } catch (err) {
-    const errors = err.response.data;
+};
 
-    if (errors) {
-      dispatch({
-        type: FETCH_ERROR,
-        error: errors.message,
-      });
-    }
-  }
+export const updateUser = (slug, userData) => async (dispatch) => {
+  return await axios
+    .put(`users/${slug}`, userData)
+    .then((res) => {
+      if (res.status === 200) {
+        const data = res.data;
+        dispatch({
+          type: UPDATE_USER,
+          payload: data.data,
+        });
+        dispatch({
+          type: SHOW_MESSAGE,
+          payload: data.message,
+        });
+        return data;
+      }
+    })
+    .catch((err) => {
+      if (err.response) {
+        const errors = err.response.data;
+
+        if (errors) {
+          dispatch({
+            type: FETCH_ERROR,
+            // error: errors.message,
+            payload: errors.message,
+          });
+        }
+      }
+
+      console.log(err);
+    });
+};
+
+export const deleteUser = (slug) => async (dispatch) => {
+  return await axios
+    .delete(`users/${slug}`)
+    .then((res) => {
+      if (res.status === 200) {
+        const data = res.data;
+        dispatch({
+          type: DELETE_USER,
+          payload: slug,
+        });
+        dispatch({
+          type: SHOW_MESSAGE,
+          payload: data.message,
+        });
+        return data;
+      }
+    })
+    .catch((err) => {
+      if (err.response) {
+        const errors = err.response.data;
+
+        if (errors) {
+          dispatch({
+            type: FETCH_ERROR,
+            // error: errors.message,
+            payload: errors.message,
+          });
+        }
+      }
+
+      console.log(err);
+    });
 };

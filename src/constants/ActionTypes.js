@@ -147,3 +147,5 @@ export const UPDATE_SEARCH = "update_search";
 export const SET_LOADING = "SET_LOADING";
 export const GET_USERS = "get_users";
 export const ADD_USER = "add_user";
+export const UPDATE_USER = "UPDATE_USER";
+export const DELETE_USER = "DELETE_USER";
