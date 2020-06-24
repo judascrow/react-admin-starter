@@ -1,3 +1,12 @@
+// NEW
+export const SET_LOADING = "SET_LOADING";
+export const GET_USERS = "GET_USERS";
+export const ADD_USER = "ADD_USER";
+export const UPDATE_USER = "UPDATE_USER";
+export const DELETE_USER = "DELETE_USER";
+
+export const GET_ROLES = "GET_ROLES";
+
 // Customizer const
 export const TOGGLE_COLLAPSED_NAV = "toggle_collapse_menu";
 export const DRAWER_TYPE = "drawer_type";
@@ -143,9 +152,3 @@ export const ON_TODO_SELECT = "on_todo_select";
 export const SET_CURRENT_TODO_NULL = "set_current_todo_null";
 export const REMOVE_LABEL = "remove_label";
 export const UPDATE_SEARCH = "update_search";
-
-export const SET_LOADING = "SET_LOADING";
-export const GET_USERS = "get_users";
-export const ADD_USER = "add_user";
-export const UPDATE_USER = "UPDATE_USER";
-export const DELETE_USER = "DELETE_USER";

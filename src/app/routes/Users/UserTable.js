@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import MaterialTable from "material-table";
 
 import Chip from "@material-ui/core/Chip";
+import { makeStyles } from "@material-ui/core/styles";
 
 import CircularProgress from "components/CircularProgress";
 
@@ -12,7 +13,16 @@ import { getUsers, deleteUser } from "actions/User";
 
 import UserAddModal from "./UserAddModal";
 
+const useStyles = makeStyles((theme) => ({
+  chip: {
+    backgroundColor: theme.palette.success.main,
+    color: "#fff",
+  },
+}));
+
 const UserTable = (props) => {
+  const classes = useStyles();
+
   const [open, setOpen] = React.useState(false);
   const [userData, setUserData] = React.useState(null);
 
@@ -51,7 +61,7 @@ const UserTable = (props) => {
       title: "สิทธิ์การใช้งาน",
       field: "roles[0].name",
       render: (rowData) => {
-        switch (rowData.roles[0].name) {
+        switch (rowData.role.name) {
           case "ROLE_ADMIN":
             return (
               <Chip
@@ -80,7 +90,7 @@ const UserTable = (props) => {
       field: "status",
       render: (rowData) =>
         rowData.status === "A" ? (
-          <Chip label="Active" color="primary" size="small" />
+          <Chip label="Active" size="small" className={classes.chip} />
         ) : (
           <Chip label="Inactive" size="small" />
         ),

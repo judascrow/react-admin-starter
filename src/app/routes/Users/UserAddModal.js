@@ -11,23 +11,35 @@ import Alert from "@material-ui/lab/Alert";
 
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 
 import { createUser, updateUser } from "actions/User";
+
+import Select from "app/common/SelectOption";
+import RolesSelectOptions from "app/routes/Roles/RolesSelectOptions";
+
+// Status Options
+const statusOptionsList = [
+  { value: "A", label: "Active - เปิดใช้งาน" },
+  { value: "I", label: "Inactive - ปิดใช้งาน" },
+];
 
 const UserAddModal = (props) => {
   const thumb =
     "https://image.freepik.com/free-vector/businessman-character-avatar-icon-vector-illustration-design_24877-18271.jpg";
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
-  const { register, handleSubmit, errors } = useForm({
+  const { register, handleSubmit, errors, control, watch } = useForm({
     mode: "onChange",
     reValidateMode: "onChange",
   });
+  const watchRoleId = watch("roleId");
 
   const { open, handleClose, user, createUser, updateUser } = props;
 
   const onSubmit = async (data) => {
+    data.roleId = data.roleId.value;
+    data.status = data.status.value;
     console.log(data);
     if (user) {
       await updateUser(user.slug, data)
@@ -85,7 +97,7 @@ const UserAddModal = (props) => {
                   <div className="col-lg-6">
                     <TextField
                       disabled={user ? true : false}
-                      fullwidth
+                      fullWidth
                       label="ชื่อผู้ใช้งาน"
                       name="username"
                       defaultValue={user && user.username}
@@ -164,6 +176,50 @@ const UserAddModal = (props) => {
                     {errors.lastName && (
                       <Alert severity="error">กรุณากรอกนามสกุล</Alert>
                     )}
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-lg-6" style={{ marginTop: "12px" }}>
+                    <Controller
+                      as={RolesSelectOptions}
+                      control={control}
+                      reactSelectID={"roleId"}
+                      name={"roleId"}
+                      labelName={"สิทธิ์การใช้งาน"}
+                      onChange={([selected]) => {
+                        return selected;
+                      }}
+                      // isClearable={true}
+                      defaultValue={user && user.roleId ? user.roleId : 3}
+                      error={!!errors.roleId}
+                      inputRef={register({ required: true })}
+                    />
+                    {watchRoleId === null && (
+                      <Alert style={{ marginTop: "8px" }} severity="error">
+                        กรุณาเลือกสิทธิ์การใช้งาน
+                      </Alert>
+                    )}
+                  </div>
+                  <div className="col-lg-6" style={{ marginTop: "12px" }}>
+                    <Controller
+                      as={Select}
+                      control={control}
+                      options={statusOptionsList}
+                      reactSelectID={"status"}
+                      name={"status"}
+                      labelName={"สถานะ"}
+                      onChange={([selected]) => {
+                        return selected;
+                      }}
+                      defaultValue={
+                        user && user.roleId
+                          ? statusOptionsList.find(
+                              (s) => s.value === user.status
+                            )
+                          : statusOptionsList[0]
+                      }
+                      inputRef={register({ required: true })}
+                    />
                   </div>
                 </div>
               </div>

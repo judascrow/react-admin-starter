@@ -4,6 +4,7 @@ import Settings from "./Settings";
 import Auth from "./Auth";
 import Common from "./Common";
 import Users from "./Users";
+import Roles from "./Roles";
 
 export default (history) =>
   combineReducers({
@@ -12,4 +13,5 @@ export default (history) =>
     auth: Auth,
     commonData: Common,
     user: Users,
+    role: Roles,
   });

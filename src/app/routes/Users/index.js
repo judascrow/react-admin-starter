@@ -18,8 +18,14 @@ const useStyles = makeStyles((theme) => ({
   },
   fab: {
     position: "fixed",
+    zIndex: 1000,
     bottom: theme.spacing(3),
     right: theme.spacing(3),
+    backgroundColor: theme.palette.success.main,
+    color: "#fff",
+    "&:hover": {
+      backgroundColor: theme.palette.success.dark,
+    },
   },
 }));
 

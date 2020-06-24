@@ -1,5 +1,6 @@
 import indigo from "@material-ui/core/colors/indigo";
 import pink from "@material-ui/core/colors/pink";
+import green from "@material-ui/core/colors/green";
 
 export default {
   palette: {
@@ -13,6 +14,12 @@ export default {
       light: pink[300],
       main: pink[500],
       dark: pink[700],
+      contrastText: "#fff",
+    },
+    success: {
+      light: green[500],
+      main: green[700],
+      dark: green[900],
       contrastText: "#fff",
     },
   },
