@@ -16,6 +16,7 @@ import { useForm, Controller } from "react-hook-form";
 import { createUser, updateUser } from "actions/User";
 
 import Select from "app/common/SelectOption";
+import AlertText from "app/common/AlertText";
 import RolesSelectOptions from "app/routes/Roles/RolesSelectOptions";
 
 // Status Options
@@ -103,10 +104,12 @@ const UserAddModal = (props) => {
                       defaultValue={user && user.username}
                       error={!!errors.username}
                       inputRef={register({ required: true })}
+                      helperText={
+                        errors.username && (
+                          <AlertText>กรุณากรอกชื่อผู้ใช้</AlertText>
+                        )
+                      }
                     />
-                    {errors.username && (
-                      <Alert severity="error">กรุณากรอกชื่อผู้ใช้</Alert>
-                    )}
                   </div>
                   {!user ? (
                     <div className="col-lg-6">
@@ -116,11 +119,18 @@ const UserAddModal = (props) => {
                         label="รหัสผ่าน"
                         name="password"
                         error={!!errors.password}
-                        inputRef={register({ required: true })}
+                        inputRef={register({ required: true, minLength: 6 })}
                       />
-                      {errors.password && (
-                        <Alert severity="error">กรุณากรอกรหัสผ่าน</Alert>
-                      )}
+                      {errors.password &&
+                        errors.password.type === "required" && (
+                          <Alert severity="error">กรุณากรอกรหัสผ่าน</Alert>
+                        )}
+                      {errors.password &&
+                        errors.password.type === "minLength" && (
+                          <Alert severity="error">
+                            ต้องมีอย่างน้อย 6 ตัวอักษร
+                          </Alert>
+                        )}
                     </div>
                   ) : (
                     ""

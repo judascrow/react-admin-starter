@@ -28,11 +28,11 @@ class SignIn extends React.Component {
       <div className="app-login-container d-flex justify-content-center align-items-center animated slideInUpTiny animation-duration-3">
         <div className="app-login-main-content">
           <div className="app-logo-content d-flex align-items-center justify-content-center">
-            <Link className="logo-lg" to="/" title="Jambo">
+            <Link className="logo-lg" to="/" title="speciailst">
               <img
                 src={require("assets/images/logo.png")}
-                alt="jambo"
-                title="jambo"
+                alt="speciailst"
+                title="speciailst"
               />
             </Link>
           </div>
@@ -81,7 +81,8 @@ class SignIn extends React.Component {
                     </Button>
 
                     <Link to="/signup">
-                      <IntlMessages id="signIn.signUp" />
+                      {/* <IntlMessages id="signIn.signUp" /> */}
+                      ลงทะเบียนเข้าใช้งาน
                     </Link>
                   </div>
                 </fieldset>

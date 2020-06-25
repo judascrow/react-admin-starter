@@ -62,7 +62,7 @@ const UserTable = (props) => {
       field: "roles[0].name",
       render: (rowData) => {
         switch (rowData.role.name) {
-          case "ROLE_ADMIN":
+          case "admin":
             return (
               <Chip
                 variant="outlined"
@@ -71,7 +71,7 @@ const UserTable = (props) => {
                 size="small"
               />
             );
-          case "ROLE_STAFF":
+          case "staff":
             return (
               <Chip
                 variant="outlined"

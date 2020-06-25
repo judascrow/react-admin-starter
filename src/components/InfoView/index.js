@@ -11,7 +11,7 @@ function Alert(props) {
 }
 
 class InfoView extends React.Component {
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.error || nextProps.message) {
       setTimeout(() => {
         this.props.hideMessage();
@@ -27,7 +27,7 @@ class InfoView extends React.Component {
       showMessage = error;
     }
 
-    console.log("showMessage, open", showMessage, open);
+    // console.log("showMessage, open", showMessage, open);
 
     return (
       <Auxiliary>
@@ -41,7 +41,7 @@ class InfoView extends React.Component {
           anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
           open={open}
           autoHideDuration={5000}
-          TransitionComponent="fade"
+          TransitionComponent={"fade"}
           // ContentProps={{
           //   "aria-describedby": "message-id",
           // }}

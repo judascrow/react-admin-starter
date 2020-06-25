@@ -16,36 +16,46 @@ export const setInitUrl = (url) => {
   };
 };
 
-export const userSignUp = ({ name, email, password }) => {
-  console.log(name, email, password);
+export const userSignUp = (data) => {
+  const { username, email, password, firstName, lastName } = data;
   return (dispatch) => {
+    console.log(username);
     dispatch({ type: FETCH_START });
     axios
       .post("auth/register", {
+        username: username,
         email: email,
         password: password,
-        name: name,
+        firstName: firstName,
+        lastName: lastName,
       })
       .then(({ data }) => {
         console.log("data:", data);
-        if (data.result) {
-          localStorage.setItem(
-            "token",
-            JSON.stringify(data.token.access_token)
-          );
-          axios.defaults.headers.common["access-token"] =
-            "Bearer " + data.token.access_token;
+        if (data) {
+          localStorage.setItem("token", "Bearer " + data.token);
+          axios.defaults.headers.common["Authorization"] =
+            "Bearer " + data.token;
           dispatch({ type: FETCH_SUCCESS });
-          dispatch({ type: USER_TOKEN_SET, payload: data.token.access_token });
-          dispatch({ type: USER_DATA, payload: data.user });
+          dispatch({ type: USER_TOKEN_SET, payload: data.token });
+          dispatch({ type: USER_DATA, payload: data.data });
         } else {
           console.log("payload: data.error", data.error);
           dispatch({ type: FETCH_ERROR, payload: "Network Error" });
         }
       })
       .catch(function(error) {
-        dispatch({ type: FETCH_ERROR, payload: error.message });
-        console.log("Error****:", error.message);
+        let err = error;
+        if (err.response) {
+          err = err.response.data.message;
+        } else if (!error.status) {
+          err = "network error";
+        }
+        if (err) {
+          dispatch({
+            type: FETCH_ERROR,
+            payload: err,
+          });
+        }
       });
   };
 };
@@ -71,20 +81,34 @@ export const userSignIn = ({ username, password }) => {
         }
       })
       .catch(function(error) {
-        dispatch({ type: FETCH_ERROR, payload: error.response.data.message });
-        console.log("Error****:", error.response.data.message);
+        let err = error;
+        if (err.response) {
+          err = err.response.data.message;
+        } else if (!error.status) {
+          err = "network error";
+        }
+        if (err) {
+          dispatch({
+            type: FETCH_ERROR,
+            payload: err,
+          });
+        }
       });
   };
 };
 
 export const getUser = () => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch({ type: FETCH_START });
-    axios.defaults.headers.common["Authorization"] = localStorage.getItem(
-      "token"
-    );
-    axios
-      .get("auth/me")
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token"),
+      },
+    };
+    // console.log(config);
+    await axios
+      .get("auth/me", config)
       .then(({ data }) => {
         console.log("userMe: ", data);
         if (data) {

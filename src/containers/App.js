@@ -43,7 +43,7 @@ class App extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.token) {
       axios.defaults.headers.common["Authorization"] = nextProps.token;
     }

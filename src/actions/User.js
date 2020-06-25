@@ -116,7 +116,7 @@ export const deleteUser = (slug) => async (dispatch) => {
   return await axios
     .delete(`users/${slug}`)
     .then((res) => {
-      if (res.status === 200) {
+      if (res.status === 204) {
         const data = res.data;
         dispatch({
           type: DELETE_USER,
@@ -124,7 +124,7 @@ export const deleteUser = (slug) => async (dispatch) => {
         });
         dispatch({
           type: SHOW_MESSAGE,
-          payload: data.message,
+          payload: "ลบผู้ใช้งานเรียบร้อยแล้ว",
         });
         return data;
       }
