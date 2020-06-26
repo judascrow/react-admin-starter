@@ -67,14 +67,16 @@ class App extends React.Component {
                   component={asyncComponent(() => import("./routes/Dashboard"))}
                 />
                 <Route
-                  path={`${match.url}/sample-page`}
-                  component={asyncComponent(() =>
-                    import("./routes/SamplePage")
-                  )}
+                  path={`${match.url}/main`}
+                  component={asyncComponent(() => import("./routes/Main"))}
                 />
                 <Route
                   path={`${match.url}/users`}
                   component={asyncComponent(() => import("./routes/Users"))}
+                />
+                <Route
+                  path={`${match.url}/reqform`}
+                  component={asyncComponent(() => import("./routes/Reqform"))}
                 />
                 <Route
                   component={asyncComponent(() =>

@@ -39,7 +39,12 @@ const UserAddModal = (props) => {
   const { open, handleClose, user, createUser, updateUser } = props;
 
   const onSubmit = async (data) => {
-    data.roleId = data.roleId.value;
+    if (data.roleId.value === undefined) {
+      data.roleId = 3;
+    } else {
+      data.roleId = data.roleId.value;
+    }
+
     data.status = data.status.value;
     console.log(data);
     if (user) {
@@ -72,7 +77,7 @@ const UserAddModal = (props) => {
       <Modal
         disablebackdropclick="true"
         disableescapekeydown="true"
-        fullScreen={fullScreen.toString()}
+        fullscreen={fullScreen.toString()}
         className="modal-box"
         isOpen={open}
       >
@@ -103,12 +108,25 @@ const UserAddModal = (props) => {
                       name="username"
                       defaultValue={user && user.username}
                       error={!!errors.username}
-                      inputRef={register({ required: true })}
-                      helperText={
-                        errors.username && (
-                          <AlertText>กรุณากรอกชื่อผู้ใช้</AlertText>
-                        )
-                      }
+                      inputRef={register({
+                        required: true,
+                        minLength: 6,
+                        maxLength: 50,
+                      })}
+                      helperText={[
+                        errors.username &&
+                          errors.username.type === "required" && (
+                            <AlertText>กรุณากรอกชื่อผู้ใช้</AlertText>
+                          ),
+                        errors.username &&
+                          errors.username.type === "minLength" && (
+                            <AlertText>ต้องมีอย่างน้อย 6 ตัวอักษร</AlertText>
+                          ),
+                        errors.username &&
+                          errors.username.type === "maxLength" && (
+                            <AlertText>ต้องมีไม่เกิน 20 ตัวอักษร</AlertText>
+                          ),
+                      ]}
                     />
                   </div>
                   {!user ? (
@@ -119,18 +137,26 @@ const UserAddModal = (props) => {
                         label="รหัสผ่าน"
                         name="password"
                         error={!!errors.password}
-                        inputRef={register({ required: true, minLength: 6 })}
+                        inputRef={register({
+                          required: true,
+                          minLength: 6,
+                          maxLength: 20,
+                        })}
+                        helperText={[
+                          errors.password &&
+                            errors.password.type === "required" && (
+                              <AlertText>กรุณากรอกรหัสผ่าน</AlertText>
+                            ),
+                          errors.password &&
+                            errors.password.type === "minLength" && (
+                              <AlertText>ต้องมีอย่างน้อย 6 ตัวอักษร</AlertText>
+                            ),
+                          errors.password &&
+                            errors.password.type === "maxLength" && (
+                              <AlertText>ต้องมีไม่เกิน 20 ตัวอักษร</AlertText>
+                            ),
+                        ]}
                       />
-                      {errors.password &&
-                        errors.password.type === "required" && (
-                          <Alert severity="error">กรุณากรอกรหัสผ่าน</Alert>
-                        )}
-                      {errors.password &&
-                        errors.password.type === "minLength" && (
-                          <Alert severity="error">
-                            ต้องมีอย่างน้อย 6 ตัวอักษร
-                          </Alert>
-                        )}
                     </div>
                   ) : (
                     ""
@@ -149,13 +175,17 @@ const UserAddModal = (props) => {
                         pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
                         required: true,
                       })}
+                      helperText={[
+                        errors.password &&
+                          errors.password.type === "required" && (
+                            <AlertText>กรุณากรอก Email</AlertText>
+                          ),
+                        errors.password &&
+                          errors.password.type === "pattern" && (
+                            <AlertText>รูปแบบ Email ไม่ถูกต้อง</AlertText>
+                          ),
+                      ]}
                     />
-                    {errors.email && errors.email.type === "required" && (
-                      <Alert severity="error">กรุณากรอกอีเมล์</Alert>
-                    )}
-                    {errors.email && errors.email.type === "pattern" && (
-                      <Alert severity="error">รูปแบบอีเมล์ไม่ถูกต้อง</Alert>
-                    )}
                   </div>
                 </div>
                 <div className="row ">
@@ -168,10 +198,10 @@ const UserAddModal = (props) => {
                       defaultValue={user && user.firstName}
                       error={!!errors.firstName}
                       inputRef={register({ required: true })}
+                      helperText={
+                        errors.firstName && <AlertText>กรุณากรอกชื่อ</AlertText>
+                      }
                     />
-                    {errors.firstName && (
-                      <Alert severity="error">กรุณากรอกชื่อ</Alert>
-                    )}
                   </div>
                   <div className="col-lg-6">
                     <TextField
@@ -181,11 +211,12 @@ const UserAddModal = (props) => {
                       name="lastName"
                       defaultValue={user && user.lastName}
                       error={!!errors.lastName}
-                      inputRef={register({ required: true })}
+                      helperText={
+                        errors.lastName && (
+                          <AlertText>กรุณากรอกนามสกุล</AlertText>
+                        )
+                      }
                     />
-                    {errors.lastName && (
-                      <Alert severity="error">กรุณากรอกนามสกุล</Alert>
-                    )}
                   </div>
                 </div>
                 <div className="row">

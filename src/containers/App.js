@@ -63,8 +63,13 @@ class App extends Component {
     if (location.pathname === "/") {
       if (token === null) {
         return <Redirect to={"/signin"} />;
-      } else if (initURL === "" || initURL === "/" || initURL === "/signin") {
+      } else if (
+        (initURL === "" || initURL === "/" || initURL === "/signin") &&
+        this.props.authUser.roleId === 1
+      ) {
         return <Redirect to={"/app/dashboard"} />;
+      } else if (initURL === "" || initURL === "/" || initURL === "/signin") {
+        return <Redirect to={"/app/main"} />;
       } else {
         return <Redirect to={initURL} />;
       }

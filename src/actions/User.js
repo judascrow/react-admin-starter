@@ -45,8 +45,15 @@ export const getUsers = () => async (dispatch) => {
 };
 
 export const createUser = (user) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("token"),
+    },
+  };
+
   return await axios
-    .post(`users`, user)
+    .post(`users`, user, config)
     .then((res) => {
       if (res.status === 201) {
         const data = res.data;
@@ -79,8 +86,15 @@ export const createUser = (user) => async (dispatch) => {
 };
 
 export const updateUser = (slug, userData) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("token"),
+    },
+  };
+
   return await axios
-    .put(`users/${slug}`, userData)
+    .put(`users/${slug}`, userData, config)
     .then((res) => {
       if (res.status === 200) {
         const data = res.data;
@@ -113,8 +127,15 @@ export const updateUser = (slug, userData) => async (dispatch) => {
 };
 
 export const deleteUser = (slug) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("token"),
+    },
+  };
+
   return await axios
-    .delete(`users/${slug}`)
+    .delete(`users/${slug}`, config)
     .then((res) => {
       if (res.status === 204) {
         const data = res.data;

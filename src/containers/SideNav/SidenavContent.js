@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { NavLink, withRouter } from "react-router-dom";
-
+import { connect } from "react-redux";
 import IntlMessages from "util/IntlMessages";
 import CustomScrollbars from "util/CustomScrollbars";
 
@@ -108,34 +108,60 @@ class SidenavContent extends Component {
           <li className="nav-header">
             <IntlMessages id="sidebar.main" />
           </li>
-          <li className="menu no-arrow">
-            <NavLink to="/app/dashboard">
-              <i className="zmdi zmdi-view-dashboard zmdi-hc-fw" />
-              <span className="nav-text">
-                <IntlMessages id="pages.dashboard" />{" "}
-              </span>
-            </NavLink>
-          </li>
-          <li className="menu no-arrow">
-            <NavLink to="/app/users">
-              <i className="zmdi zmdi-account-box-o zmdi-hc-fw" />
-              <span className="nav-text">
-                <IntlMessages id="users.main" />{" "}
-              </span>
-            </NavLink>
-          </li>
-          <li className="menu no-arrow">
-            <NavLink to="/app/sample-page">
-              <i className="zmdi zmdi-view-dashboard zmdi-hc-fw" />
-              <span className="nav-text">
-                <IntlMessages id="pages.samplePage" />{" "}
-              </span>
-            </NavLink>
-          </li>
+          {this.props.user && this.props.user.roleId !== 3 ? (
+            <li className="menu no-arrow">
+              <NavLink to="/app/dashboard">
+                <i className="zmdi zmdi-view-dashboard zmdi-hc-fw" />
+                <span className="nav-text">
+                  <IntlMessages id="pages.dashboard" />{" "}
+                </span>
+              </NavLink>
+            </li>
+          ) : (
+            ""
+          )}
+          {this.props.user && this.props.user.roleId !== 3 ? (
+            <li className="menu no-arrow">
+              <NavLink to="/app/users">
+                <i className="zmdi zmdi-account-box-o zmdi-hc-fw" />
+                <span className="nav-text">
+                  <IntlMessages id="users.main" />{" "}
+                </span>
+              </NavLink>
+            </li>
+          ) : (
+            ""
+          )}
+          {this.props.user && this.props.user.roleId === 3 ? (
+            <li className="menu no-arrow">
+              <NavLink to="/app/main">
+                <i className="zmdi zmdi-home zmdi-hc-fw" />
+                <span className="nav-text">หน้าหลัก </span>
+              </NavLink>
+            </li>
+          ) : (
+            ""
+          )}
+          {this.props.user && this.props.user.roleId === 3 ? (
+            <li className="menu no-arrow">
+              <NavLink to="/app/reqform">
+                <i className="zmdi zmdi-assignment zmdi-hc-fw" />
+                <span className="nav-text">คำขอขึ้นทะเบียน </span>
+              </NavLink>
+            </li>
+          ) : (
+            ""
+          )}
         </ul>
       </CustomScrollbars>
     );
   }
 }
 
-export default withRouter(SidenavContent);
+const mapStateToProps = (state) => {
+  return {
+    user: state.auth.authUser,
+  };
+};
+
+export default connect(mapStateToProps, {})(withRouter(SidenavContent));
