@@ -15,8 +15,8 @@ import { useForm, Controller } from "react-hook-form";
 
 import { createUser, updateUser } from "actions/User";
 
-import Select from "app/common/SelectOption";
-import AlertText from "app/common/AlertText";
+import Select from "app/components/SelectOption";
+import AlertText from "app/components/AlertText";
 import RolesSelectOptions from "app/routes/Roles/RolesSelectOptions";
 
 // Status Options

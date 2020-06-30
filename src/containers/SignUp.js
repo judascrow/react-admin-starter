@@ -8,7 +8,7 @@ import IntlMessages from "util/IntlMessages";
 import InfoView from "components/InfoView";
 import { userSignUp } from "../actions/Auth";
 import { useForm } from "react-hook-form";
-import AlertText from "app/common/AlertText";
+import AlertText from "app/components/AlertText";
 
 // class SignUp extends React.Component {
 const SignUp = (props) => {

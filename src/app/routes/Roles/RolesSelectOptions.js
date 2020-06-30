@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Select from "app/common/SelectOption";
+import Select from "app/components/SelectOption";
 import { getAllRoles } from "app/requests/Roles";
 
 const RolesSelectOptions = ({

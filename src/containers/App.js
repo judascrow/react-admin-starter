@@ -65,6 +65,7 @@ class App extends Component {
         return <Redirect to={"/signin"} />;
       } else if (
         (initURL === "" || initURL === "/" || initURL === "/signin") &&
+        this.props.authUser &&
         this.props.authUser.roleId === 1
       ) {
         return <Redirect to={"/app/dashboard"} />;

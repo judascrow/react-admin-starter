@@ -1,4 +1,13 @@
 {
+  "input.required": "กรุณากรอกข้อมูล",
+
+  "users.main": "ผู้ใช้งาน",
+  "users.main.description": "จัดการผู้ใช้งาน",
+  "users.addUser": "เพิ่มผู้ใช้งาน",
+  "users.save": "บันทึกข้อมูล",
+  "users.saveUser": "บันทึกข้อมูลผู้ใช้งาน",
+  "users.cancel": "ยกเลิก",
+
   "sidebar.main": "เมนูหลัก",
   "sidebar.dashboard": "Dashboard",
   "sidebar.dashboard.misc": "Misc",
@@ -571,12 +580,5 @@
   "dashboard.traffic": "Traffic",
   "dashboard.browser": "Browser",
   "dashboard.application": "Application",
-  "dashboard.weekly": "Weekly",
-
-  "users.main": "ผู้ใช้งาน",
-  "users.main.description": "จัดการผู้ใช้งาน",
-  "users.addUser": "เพิ่มผู้ใช้งาน",
-  "users.save": "บันทึกข้อมูล",
-  "users.saveUser": "บันทึกข้อมูลผู้ใช้งาน",
-  "users.cancel": "ยกเลิก"
+  "dashboard.weekly": "Weekly"
 }

@@ -2,16 +2,20 @@ import React, { useState, createContext } from "react";
 
 export const StoreContext = createContext({});
 
-export const StoreContextProvider = ({ children }) => {
+export const StoreContextProvider = ({ user, children }) => {
   const [personal, setPersonal] = useState({
-    firstName: undefined,
-    lastName: undefined,
     idCard: undefined,
+    govCard: undefined,
+    cardExpire: user && user.cardExpire ? user.cardExpire : undefined,
+    prefixName: undefined,
+    firstName: user ? user.firstName : undefined,
+    lastName: user ? user.lastName : undefined,
+    birthDate: user && user.birthDate ? user.birthDate : null,
+    race: undefined,
+    nation: undefined,
   });
   const [address, setAddress] = useState({
-    email: undefined,
-    password: undefined,
-    confirmPassword: undefined,
+    aaaa: undefined,
   });
 
   const store = {
