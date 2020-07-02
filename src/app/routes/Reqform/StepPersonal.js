@@ -37,18 +37,20 @@ const StepPersonal = ({ formProps: { register, errors }, data }) => {
               })}
               helperText={[
                 errors.idCard && errors.idCard.type === "required" && (
-                  <AlertText>
+                  <AlertText key={1}>
                     <IntlMessages id="input.required" />
                   </AlertText>
                 ),
                 errors.idCard && errors.idCard.type === "pattern" && (
-                  <AlertText>รูปแบบเลขบัตรประจำตัวประชาชนไม่ถูกต้อง</AlertText>
+                  <AlertText key={2}>
+                    รูปแบบเลขบัตรประจำตัวประชาชนไม่ถูกต้อง
+                  </AlertText>
                 ),
                 errors.idCard && errors.idCard.type === "minLength" && (
-                  <AlertText>ต้องมี 13 ตัวอักษร</AlertText>
+                  <AlertText key={3}>ต้องมี 13 ตัวอักษร</AlertText>
                 ),
                 errors.idCard && errors.idCard.type === "maxLength" && (
-                  <AlertText>ต้องมี 13 ตัวอักษร</AlertText>
+                  <AlertText key={4}>ต้องมี 13 ตัวอักษร</AlertText>
                 ),
               ]}
             />

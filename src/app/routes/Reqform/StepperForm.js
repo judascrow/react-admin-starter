@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 
 import StepPersonal from "./StepPersonal";
 import StepAddress from "./StepAddress";
+import StepWork from "./StepWork";
 import { StoreContext } from "app/context/store";
 
 const useStyles = makeStyles((theme) => ({
@@ -39,7 +40,7 @@ function getSteps() {
 
 const StepperForm = () => {
   const classes = useStyles();
-  const { personal, address } = useContext(StoreContext);
+  const { personal, address, work } = useContext(StoreContext);
   const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
 
@@ -55,7 +56,7 @@ const StepperForm = () => {
     setActiveStep(0);
   };
 
-  const { register, errors, handleSubmit, control } = useForm({
+  const { register, errors, handleSubmit, control, watch } = useForm({
     mode: "onChange",
     reValidateMode: "onChange",
   });
@@ -63,13 +64,12 @@ const StepperForm = () => {
   const onSubmit = (data) => {
     data.cardExpire = new Date(data.cardExpire).toJSON();
     data.birthDate = data.birthDate ? new Date(data.birthDate).toJSON() : null;
-
-    console.log(data);
-
     if (activeStep === 0) {
       personal[1](data);
     } else if (activeStep === 1) {
       address[1](data);
+    } else if (activeStep === 2) {
+      work[1](data);
     }
     handleNext();
   };
@@ -79,19 +79,19 @@ const StepperForm = () => {
       case 0:
         return (
           <StepPersonal
-            formProps={{ register, errors, control }}
+            formProps={{ register, errors, control, watch }}
             data={personal}
           />
         );
       case 1:
         return (
           <StepAddress
-            formProps={{ register, errors, control }}
+            formProps={{ register, errors, control, watch }}
             data={address}
           />
         );
       case 2:
-        return "This is the bit I really care about!";
+        return <StepWork formProps={{ register }} data={work} />;
       default:
         return "Unknown stepIndex";
     }

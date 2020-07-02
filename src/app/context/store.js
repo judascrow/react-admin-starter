@@ -15,14 +15,19 @@ export const StoreContextProvider = ({ user, children }) => {
     nation: undefined,
   });
   const [address, setAddress] = useState({
-    aaaa: undefined,
+    provinceID: undefined,
+    districtID: undefined,
+    subDistrictID: undefined,
+  });
+  const [work, setWork] = useState({
+    aaa: undefined,
   });
 
   const store = {
     personal: [personal, setPersonal],
     address: [address, setAddress],
+    work: [work, setWork],
   };
-  console.log(store);
   return (
     <StoreContext.Provider value={store}>{children}</StoreContext.Provider>
   );
