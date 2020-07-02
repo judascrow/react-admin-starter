@@ -30,7 +30,7 @@ const StepPersonal = ({ formProps: { register, errors }, data }) => {
               defaultValue={idCard}
               error={!!errors.idCard}
               inputRef={register({
-                required: true,
+                //required: true,
                 pattern: /[0-9]{13}/,
                 minLength: 13,
                 maxLength: 13,
@@ -77,7 +77,7 @@ const StepPersonal = ({ formProps: { register, errors }, data }) => {
               }}
               error={!!errors.cardExpire}
               inputRef={register({
-                required: true,
+                //required: true,
               })}
               helperText={[
                 errors.cardExpire && errors.cardExpire.type === "required" && (
@@ -97,7 +97,7 @@ const StepPersonal = ({ formProps: { register, errors }, data }) => {
               defaultValue={prefixName}
               error={!!errors.prefixName}
               inputRef={register({
-                required: true,
+                //required: true,
               })}
               helperText={[
                 errors.prefixName && errors.prefixName.type === "required" && (
@@ -115,7 +115,7 @@ const StepPersonal = ({ formProps: { register, errors }, data }) => {
               defaultValue={firstName}
               error={!!errors.firstName}
               inputRef={register({
-                required: true,
+                //required: true,
               })}
               helperText={[
                 errors.firstName && errors.firstName.type === "required" && (
@@ -133,7 +133,7 @@ const StepPersonal = ({ formProps: { register, errors }, data }) => {
               defaultValue={lastName}
               error={!!errors.lastName}
               inputRef={register({
-                required: true,
+                //required: true,
               })}
               helperText={[
                 errors.lastName && errors.lastName.type === "required" && (
@@ -159,7 +159,7 @@ const StepPersonal = ({ formProps: { register, errors }, data }) => {
               }}
               error={!!errors.birthDate}
               inputRef={register({
-                required: true,
+                //required: true,
               })}
               helperText={[
                 errors.birthDate && errors.birthDate.type === "required" && (
@@ -177,7 +177,7 @@ const StepPersonal = ({ formProps: { register, errors }, data }) => {
               defaultValue={race}
               error={!!errors.race}
               inputRef={register({
-                required: true,
+                //required: true,
               })}
               helperText={[
                 errors.race && errors.race.type === "required" && (
@@ -195,7 +195,7 @@ const StepPersonal = ({ formProps: { register, errors }, data }) => {
               defaultValue={nation}
               error={!!errors.nation}
               inputRef={register({
-                required: true,
+                //required: true,
               })}
               helperText={[
                 errors.nation && errors.nation.type === "required" && (
