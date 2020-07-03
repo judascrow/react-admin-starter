@@ -256,6 +256,7 @@ const IntegrationReactSelect = ({
   defaultValue,
   reactSelectID,
   isClearable,
+  readOnly,
 }) => {
   const classes = useStyles();
   const theme = useTheme();
@@ -289,7 +290,6 @@ const IntegrationReactSelect = ({
               shrink: true,
             },
           }}
-          isClearable={isClearable}
           menuPlacement="auto"
           options={selectOptions}
           components={components}
@@ -298,6 +298,10 @@ const IntegrationReactSelect = ({
           onChange={onChange}
           maxMenuHeight={150}
           defaultValue={defaultValue}
+          isClearable={!readOnly}
+          isSearchable={!readOnly}
+          openMenuOnClick={!readOnly}
+          menuIsOpen={readOnly ? false : undefined}
         />
       </NoSsr>
     </Fragment>

@@ -13,6 +13,15 @@ export const StoreContextProvider = ({ user, children }) => {
     birthDate: user && user.birthDate ? user.birthDate : null,
     race: undefined,
     nation: undefined,
+    regisWork: undefined,
+    regisQualification: undefined,
+    regisDocument: undefined,
+    regisEver: undefined,
+    regisEverYear: undefined,
+    regisEverPass: undefined,
+    regisEverPassNo: undefined,
+    regisEverNopass: undefined,
+    regisEverNopassDesc: undefined,
   });
   const [address, setAddress] = useState({
     domicileNo: undefined,
@@ -37,7 +46,6 @@ export const StoreContextProvider = ({ user, children }) => {
     addressTel: undefined,
     addressFax: undefined,
     addressEmail: undefined,
-
     contactNo: undefined,
     contactMoo: undefined,
     contactSoi: undefined,
@@ -51,13 +59,50 @@ export const StoreContextProvider = ({ user, children }) => {
     contactEmail: undefined,
   });
   const [work, setWork] = useState({
-    aaa: undefined,
+    workOccupation: undefined,
+    workPosition: undefined,
+    workPlaces: undefined,
+    workRoad: undefined,
+    workSubDistrict: undefined,
+    workDistrict: undefined,
+    workProvince: undefined,
+    workZipcode: undefined,
+    workTel: undefined,
+    workFax: undefined,
+    workEmail: undefined,
+    bossFirstName: undefined,
+    bossLastName: undefined,
+    bossNo: undefined,
+    bossMoo: undefined,
+    bossSoi: undefined,
+    bossRoad: undefined,
+    bossSubDistrict: undefined,
+    bossDistrict: undefined,
+    bossProvince: undefined,
+    bossZipcode: undefined,
+    bossTel: undefined,
+    bossFax: undefined,
+    bossEmail: undefined,
+    workExperience: undefined,
+  });
+
+  const [regis, setRegis] = useState({
+    regisWork: undefined,
+    regisQualification: undefined,
+    regisDocument: undefined,
+    regisEver: undefined,
+    regisEverYear: undefined,
+    regisEverPass: undefined,
+    regisEverPassNo: undefined,
+    regisEverNopass: undefined,
+    regisEverNopassDesc: undefined,
   });
 
   const store = {
     personal: [personal, setPersonal],
     address: [address, setAddress],
     work: [work, setWork],
+    regis: [regis, setRegis],
   };
   return (
     <StoreContext.Provider value={store}>{children}</StoreContext.Provider>

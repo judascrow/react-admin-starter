@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import moment from "moment";
 
+import Typography from "@material-ui/core/Typography";
 import AlertText from "app/components/AlertText";
 import TextFieldCT from "app/components/TextFieldCT";
 import IntlMessages from "util/IntlMessages";
@@ -21,6 +22,11 @@ const StepPersonal = ({ formProps: { register, errors }, data }) => {
   return (
     <Fragment>
       <div className="col-lg-12 d-flex flex-column order-lg-2">
+        <div className="row">
+          <div className="col-lg-4" style={{ marginTop: "20px" }}>
+            <Typography variant="h6">ข้อมูลส่วนตัว</Typography>
+          </div>
+        </div>
         <div className="row ">
           <div className="col-lg-4">
             <TextFieldCT

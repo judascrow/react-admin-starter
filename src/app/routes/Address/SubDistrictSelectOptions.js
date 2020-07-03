@@ -10,6 +10,7 @@ const SubDistrictSelectOptions = ({
   isClearable,
   provinceID,
   districtID,
+  ...other
 }) => {
   const [options, setOptions] = useState([]);
 
@@ -47,6 +48,7 @@ const SubDistrictSelectOptions = ({
         labelName={labelName}
         reactSelectID={reactSelectID}
         isClearable={isClearable}
+        {...other}
       />
     </div>
   );

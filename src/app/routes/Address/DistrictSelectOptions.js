@@ -9,6 +9,7 @@ const DistrictSelectOptions = ({
   reactSelectID,
   isClearable,
   provinceID,
+  ...other
 }) => {
   const [options, setOptions] = useState([]);
 
@@ -44,7 +45,8 @@ const DistrictSelectOptions = ({
         value={options.find((s) => s.value === value)}
         labelName={labelName}
         reactSelectID={reactSelectID}
-        isClearable={isClearable}
+        //isClearable={isClearable}
+        {...other}
       />
     </div>
   );

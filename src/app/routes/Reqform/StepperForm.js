@@ -10,10 +10,12 @@ import Typography from "@material-ui/core/Typography";
 
 import { useForm } from "react-hook-form";
 
+import { StoreContext } from "app/context/store";
 import StepPersonal from "./StepPersonal";
 import StepAddress from "./StepAddress";
 import StepWork from "./StepWork";
-import { StoreContext } from "app/context/store";
+import StepRegis from "./StepRegis";
+import StepSubmit from "./StepSubmit";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,14 +35,14 @@ function getSteps() {
     "ข้อมูลส่วนตัว",
     "ข้อมูลที่อยู่",
     "ข้อมูลการทำงาน",
-    "ไฟล์แนบ",
+    "ข้อมูลการขอขึ้นทะเบียน",
     "ยืนยันและส่งข้อมูล",
   ];
 }
 
 const StepperForm = () => {
   const classes = useStyles();
-  const { personal, address, work } = useContext(StoreContext);
+  const { personal, address, work, regis } = useContext(StoreContext);
   const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
 
@@ -56,7 +58,7 @@ const StepperForm = () => {
     setActiveStep(0);
   };
 
-  const { register, errors, handleSubmit, control, watch } = useForm({
+  const { register, errors, handleSubmit, control, watch, setValue } = useForm({
     mode: "onChange",
     reValidateMode: "onChange",
   });
@@ -70,6 +72,13 @@ const StepperForm = () => {
       address[1](data);
     } else if (activeStep === 2) {
       work[1](data);
+    } else if (activeStep === 3) {
+      regis[1](data);
+    } else if (activeStep === 4) {
+      personal[1](data);
+      address[1](data);
+      work[1](data);
+      regis[1](data);
     }
     handleNext();
   };
@@ -86,12 +95,31 @@ const StepperForm = () => {
       case 1:
         return (
           <StepAddress
-            formProps={{ register, errors, control, watch }}
+            formProps={{ register, errors, control, watch, setValue }}
             data={address}
           />
         );
       case 2:
-        return <StepWork formProps={{ register }} data={work} />;
+        return (
+          <StepWork
+            formProps={{ register, errors, control, watch }}
+            data={work}
+          />
+        );
+      case 3:
+        return (
+          <StepRegis
+            formProps={{ register, errors, control, watch }}
+            data={regis}
+          />
+        );
+      case 4:
+        return (
+          <StepSubmit
+            formProps={{ register, errors, control, watch }}
+            data={{ personal, address, work, regis }}
+          />
+        );
       default:
         return "Unknown stepIndex";
     }
@@ -132,10 +160,10 @@ const StepperForm = () => {
                     onClick={handleBack}
                     className={classes.backButton}
                   >
-                    Back
+                    ย้อนกลับ
                   </Button>
                   <Button type="submit" variant="contained" color="primary">
-                    {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                    {activeStep === steps.length - 1 ? "ส่งข้อมูล" : "ถัดไป"}
                   </Button>
                 </div>
               </div>

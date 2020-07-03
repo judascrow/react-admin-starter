@@ -1,6 +1,8 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Controller } from "react-hook-form";
 import Typography from "@material-ui/core/Typography";
+import Checkbox from "@material-ui/core/Checkbox";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 import AlertText from "app/components/AlertText";
 import TextFieldCT from "app/components/TextFieldCT";
 import IntlMessages from "util/IntlMessages";
@@ -9,7 +11,7 @@ import DistrictSelectOptions from "app/routes/Address/DistrictSelectOptions";
 import SubDistrictSelectOptions from "app/routes/Address/SubDistrictSelectOptions";
 
 const StepAddress = ({
-  formProps: { register, errors, control, watch },
+  formProps: { register, errors, control, watch, setValue },
   data,
 }) => {
   const {
@@ -48,12 +50,55 @@ const StepAddress = ({
     contactEmail,
   } = data[0];
 
+  const [copyAddress, setCopyAddress] = useState(false);
+  const [labelProps, setLabelProps] = useState(null);
+  const [inputProps, setInputProps] = useState(null);
+  // const [inputProps] = useState(null);
+
   const watchDomicileProvince = watch("domicileProvince");
   const watchDomicilDistrict = watch("domicileDistrict");
   const watchAddressProvince = watch("addressProvince");
   const watchAddressDistrict = watch("addressDistrict");
   const watchContactProvince = watch("contactProvince");
   const watchContactDistrict = watch("contactDistrict");
+
+  const handleChangeCheckbox = async (e) => {
+    const { checked } = e.target;
+    await setCopyAddress(checked);
+    if (checked) {
+      await setValue("contactNo", watch("addressNo"));
+      await setValue("contactMoo", watch("addressMoo"));
+      await setValue("contactSoi", watch("addressSoi"));
+      await setValue("contactRoad", watch("addressRoad"));
+      await setValue("contactProvince", watch("addressProvince"));
+      await setValue("contactDistrict", watch("addressDistrict"));
+      await setValue("contactSubDistrict", watch("addressSubDistrict"));
+      await setValue("contactZipcode", watch("addressZipcode"));
+      await setValue("contactTel", watch("addressTel"));
+      await setValue("contactFax", watch("addressFax"));
+      await setValue("contactEmail", watch("addressEmail"));
+      await setLabelProps({
+        shrink: true,
+      });
+      await setInputProps({
+        readOnly: true,
+      });
+    } else {
+      await setValue("contactNo", contactNo);
+      await setValue("contactMoo", contactMoo);
+      await setValue("contactSoi", contactSoi);
+      await setValue("contactRoad", contactRoad);
+      await setValue("contactProvince", contactProvince);
+      await setValue("contactDistrict", contactDistrict);
+      await setValue("contactSubDistrict", contactSubDistrict);
+      await setValue("contactZipcode", contactZipcode);
+      await setValue("contactTel", contactTel);
+      await setValue("contactFax", contactFax);
+      await setValue("contactEmail", contactEmail);
+      await setLabelProps(null);
+      await setInputProps(null);
+    }
+  };
 
   return (
     <Fragment>
@@ -154,7 +199,7 @@ const StepAddress = ({
               margin="normal"
               defaultValue={domicileProvince}
               onChange={([selected]) => {
-                return selected.value;
+                return selected?.value;
               }}
               error={!!errors.domicileProvince}
               inputRef={register({
@@ -181,7 +226,7 @@ const StepAddress = ({
               margin="normal"
               defaultValue={domicileDistrict}
               onChange={([selected]) => {
-                return selected.value;
+                return selected?.value;
               }}
               provinceID={
                 watchDomicileProvince ? watchDomicileProvince : domicileProvince
@@ -199,7 +244,7 @@ const StepAddress = ({
               margin="normal"
               defaultValue={domicileSubDistrict}
               onChange={([selected]) => {
-                return selected.value;
+                return selected?.value;
               }}
               provinceID={
                 watchDomicileProvince ? watchDomicileProvince : domicileProvince
@@ -291,7 +336,7 @@ const StepAddress = ({
 
         <div className="row">
           <div className="col-lg-4" style={{ marginTop: "20px" }}>
-            <Typography variant="h6">ที่อยู๋ปัจจุบัน</Typography>
+            <Typography variant="h6">ที่อยู่ปัจจุบัน</Typography>
           </div>
         </div>
         <div className="row">
@@ -384,7 +429,7 @@ const StepAddress = ({
               margin="normal"
               defaultValue={addressProvince}
               onChange={([selected]) => {
-                return selected.value;
+                return selected?.value;
               }}
               error={!!errors.addressProvince}
               inputRef={register({
@@ -411,7 +456,7 @@ const StepAddress = ({
               margin="normal"
               defaultValue={addressDistrict}
               onChange={([selected]) => {
-                return selected.value;
+                return selected?.value;
               }}
               provinceID={
                 watchAddressProvince ? watchAddressProvince : addressProvince
@@ -429,7 +474,7 @@ const StepAddress = ({
               margin="normal"
               defaultValue={addressSubDistrict}
               onChange={([selected]) => {
-                return selected.value;
+                return selected?.value;
               }}
               provinceID={
                 watchAddressProvince ? watchAddressProvince : addressProvince
@@ -520,8 +565,23 @@ const StepAddress = ({
         </div>
 
         <div className="row">
-          <div className="col-lg-4" style={{ marginTop: "20px" }}>
-            <Typography variant="h6">ที่อยู๋ติดต่อ</Typography>
+          <div className="col-lg-6" style={{ marginTop: "20px" }}>
+            <Typography variant="h6">
+              ที่อยู่ที่สามารถติดต่อได้สะดวก{" "}
+            </Typography>
+          </div>
+          <div className="col-lg-6" style={{ marginTop: "20px" }}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={copyAddress}
+                  onChange={handleChangeCheckbox}
+                  name="copyAddress"
+                  color="primary"
+                />
+              }
+              label="ใช้ที่อยู่เดียวกับที่อยู่ปัจจุบัน"
+            />
           </div>
         </div>
         <div className="row">
@@ -530,6 +590,8 @@ const StepAddress = ({
               name="contactNo"
               label="บ้านเลขที่"
               defaultValue={contactNo}
+              InputLabelProps={labelProps}
+              InputProps={inputProps}
               error={!!errors.contactNo}
               inputRef={register({
                 //required: true,
@@ -549,6 +611,8 @@ const StepAddress = ({
               name="contactMoo"
               label="หมู่"
               defaultValue={contactMoo}
+              InputLabelProps={labelProps}
+              InputProps={inputProps}
               error={!!errors.contactMoo}
               inputRef={register({
                 //required: true,
@@ -568,6 +632,8 @@ const StepAddress = ({
               name="contactSoi"
               label="ตรอก/ซอย"
               defaultValue={contactSoi}
+              InputLabelProps={labelProps}
+              InputProps={inputProps}
               error={!!errors.contactSoi}
               inputRef={register({
                 //required: true,
@@ -587,6 +653,8 @@ const StepAddress = ({
               name="contactRoad"
               label="ถนน"
               defaultValue={contactRoad}
+              InputLabelProps={labelProps}
+              InputProps={inputProps}
               error={!!errors.contactRoad}
               inputRef={register({
                 //required: true,
@@ -612,9 +680,10 @@ const StepAddress = ({
               name={"contactProvince"}
               labelName="จังหวัด"
               margin="normal"
+              readOnly={copyAddress}
               defaultValue={contactProvince}
               onChange={([selected]) => {
-                return selected.value;
+                return selected?.value;
               }}
               error={!!errors.contactProvince}
               inputRef={register({
@@ -640,8 +709,9 @@ const StepAddress = ({
               labelName="อำเภอ"
               margin="normal"
               defaultValue={contactDistrict}
+              readOnly={copyAddress}
               onChange={([selected]) => {
-                return selected.value;
+                return selected?.value;
               }}
               provinceID={
                 watchContactProvince ? watchContactProvince : contactProvince
@@ -658,8 +728,9 @@ const StepAddress = ({
               labelName="ตำบล"
               margin="normal"
               defaultValue={contactSubDistrict}
+              readOnly={copyAddress}
               onChange={([selected]) => {
-                return selected.value;
+                return selected?.value;
               }}
               provinceID={
                 watchContactProvince ? watchContactProvince : contactProvince
@@ -674,6 +745,7 @@ const StepAddress = ({
               name="contactZipcode"
               label="รหัสไปรษณีย์"
               defaultValue={contactZipcode}
+              InputLabelProps={labelProps}
               error={!!errors.contactZipcode}
               inputRef={register({
                 //required: true,
@@ -695,6 +767,7 @@ const StepAddress = ({
               name="contactTel"
               label="หมายเลขโทรศัพท์"
               defaultValue={contactTel}
+              InputLabelProps={labelProps}
               error={!!errors.contactTel}
               inputRef={register({
                 //required: true,
@@ -714,6 +787,7 @@ const StepAddress = ({
               name="contactFax"
               label="โทรสาร"
               defaultValue={contactFax}
+              InputLabelProps={labelProps}
               error={!!errors.contactFax}
               inputRef={register({
                 //required: true,
@@ -733,6 +807,7 @@ const StepAddress = ({
               name="contactEmail"
               label="อีเมล์"
               defaultValue={contactEmail}
+              InputLabelProps={labelProps}
               error={!!errors.contactEmail}
               inputRef={register({
                 //required: true,
