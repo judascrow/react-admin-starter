@@ -32,7 +32,6 @@
 
     @each $prop, $abbrev in (margin: m, padding: p) {
       @each $size, $length in $spacers {
-
         .rtl .#{$abbrev}r#{$infix}-#{$size} {
           #{$prop}-left: $length !important;
           #{$prop}-right: 0 !important;
@@ -218,7 +217,6 @@
     right: 0;
 
     & li {
-
       & > ul.sub-menu {
         left: auto;
         right: 100%;
@@ -439,7 +437,7 @@
 
 .rtl .zmdi-chevron-right::before,
 .rtl .breadcrumb-item + .breadcrumb-item::before {
-  content: '\f2fa';
+  content: "\f2fa";
 }
 
 /*Chart Styles*/
@@ -1512,7 +1510,6 @@
 
 //Silk Slider
 .rtl .jr-slick-slider {
-
   &-dot-top {
     padding-right: 0;
     padding-left: 18px;
@@ -1573,7 +1570,6 @@
 }
 
 .rtl .jr-profile-banner .jr-follower-list {
-
   & li:not(:first-child) {
     border-right-color: $white;
   }
@@ -1589,7 +1585,6 @@
 }
 
 .rtl .jr-card-tabs-right {
-
   & .jr-tabs-up {
     margin-left: 30px;
     margin-right: auto;

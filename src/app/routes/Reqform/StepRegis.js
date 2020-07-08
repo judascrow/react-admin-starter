@@ -1,16 +1,20 @@
 import React, { Fragment } from "react";
-// import { Controller } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import Typography from "@material-ui/core/Typography";
 import AlertText from "app/components/AlertText";
 import TextFieldCT from "app/components/TextFieldCT";
 import IntlMessages from "util/IntlMessages";
+
+import SplTypeSelectOptions from "app/routes/SplTypes/SplTypeSelectOptions";
+import SplSubTypeSelectOptions from "app/routes/SplTypes/SplSubTypeSelectOptions";
 
 const StepRegis = ({
   formProps: { register, errors, control, watch },
   data,
 }) => {
   const {
-    regisWork,
+    splTypeID,
+    splSubTypeID,
     regisQualification,
     regisDocument,
     regisEver,
@@ -21,28 +25,39 @@ const StepRegis = ({
     regisEverNopassDesc,
   } = data[0];
 
+  const watchSplTypeID = watch("splTypeID");
+
   return (
     <Fragment>
       <div className="col-lg-12 d-flex flex-column order-lg-2">
         <div className="row">
-          <div className="col-lg-4" style={{ marginTop: "20px" }}>
-            <Typography variant="h6">ข้อมูลการขอขึ้นทะเบียน</Typography>
+          <div className="col-lg-12" style={{ marginTop: "20px" }}>
+            <Typography variant="h6">
+              มีความประสงค์จะขอขึ้นทะเบียนเป็นผู้เชี่ยวชาญของศาล
+            </Typography>
           </div>
         </div>
         <div className="row ">
-          <div className="col-lg-6">
-            <TextFieldCT
-              autoFocus
-              name="regisWork"
-              label="มีความประสงค์จะขอขึ้นทะเบียนเป็นผู้เชี่ยวชาญของศาลในสาขา"
-              defaultValue={regisWork}
-              error={!!errors.regisWork}
+          <div className="col-lg-4" style={{ marginTop: "20px" }}>
+            <Controller
+              fullWidth
+              as={SplTypeSelectOptions}
+              control={control}
+              reactSelectID={"splTypeID"}
+              name={"splTypeID"}
+              labelName="ในด้าน"
+              margin="normal"
+              defaultValue={splTypeID}
+              onChange={([selected]) => {
+                return selected?.value;
+              }}
+              error={!!errors.splTypeID}
               inputRef={register({
                 //required: true,
               })}
               helperText={
-                errors.regisWork &&
-                errors.regisWork.type === "required" && (
+                errors.splTypeID &&
+                errors.splTypeID.type === "required" && (
                   <AlertText>
                     <IntlMessages id="input.required" />
                   </AlertText>
@@ -50,7 +65,37 @@ const StepRegis = ({
               }
             />
           </div>
-          <div className="col-lg-6">
+          <div className="col-lg-8" style={{ marginTop: "20px" }}>
+            <Controller
+              fullWidth
+              as={SplSubTypeSelectOptions}
+              control={control}
+              reactSelectID={"splSubTypeID"}
+              name={"splSubTypeID"}
+              labelName="สาขา"
+              margin="normal"
+              defaultValue={splSubTypeID}
+              onChange={([selected]) => {
+                return selected?.value;
+              }}
+              error={!!errors.splSubTypeID}
+              inputRef={register({
+                //required: true,
+              })}
+              helperText={
+                errors.splSubTypeID &&
+                errors.splSubTypeID.type === "required" && (
+                  <AlertText>
+                    <IntlMessages id="input.required" />
+                  </AlertText>
+                )
+              }
+              splTypeID={watchSplTypeID ? watchSplTypeID : splTypeID}
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-lg-12">
             <TextFieldCT
               name="regisQualification"
               label="โดยมีคุณวุฒิ"
@@ -75,7 +120,7 @@ const StepRegis = ({
             <TextFieldCT
               multiline
               rows={6}
-              variant="outlined"
+              // variant="outlined"
               name="regisDocument"
               label="และได้แสดงหลักฐานพร้อมผลงานประกอบคำขอขึ้นทะเบียนดังนี้"
               defaultValue={regisDocument}
