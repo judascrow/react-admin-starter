@@ -5,6 +5,7 @@ import Auth from "./Auth";
 import Common from "./Common";
 import Users from "./Users";
 import Roles from "./Roles";
+import Reqform from "./Reqform";
 
 export default (history) =>
   combineReducers({
@@ -14,4 +15,5 @@ export default (history) =>
     commonData: Common,
     user: Users,
     role: Roles,
+    reqform: Reqform,
   });

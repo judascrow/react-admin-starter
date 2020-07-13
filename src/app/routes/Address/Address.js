@@ -9,8 +9,10 @@ export const GetProvinceName = (id) => {
   const [provinceName, setProvinceName] = useState(null);
 
   useEffect(() => {
-    loadProvicesData(id);
-    // eslint-disable-next-line
+    if (id !== "" && id !== null && id !== undefined) {
+      loadProvicesData(id);
+      // eslint-disable-next-line
+    }
   }, [id]);
 
   const loadProvicesData = async (id) => {
@@ -29,8 +31,10 @@ export const GetDistrictName = (id) => {
   const [districtName, setDistrictName] = useState(null);
 
   useEffect(() => {
-    loadDistrictData(id);
-    // eslint-disable-next-line
+    if (id !== "" && id !== null && id !== undefined) {
+      loadDistrictData(id);
+      // eslint-disable-next-line
+    }
   }, [id]);
 
   const loadDistrictData = async (id) => {
@@ -49,8 +53,10 @@ export const GetSubDistrictName = (id) => {
   const [subDistrictName, setSubDistrictName] = useState(null);
 
   useEffect(() => {
-    loadSubDistrictData(id);
-    // eslint-disable-next-line
+    if (id !== "" && id !== null && id !== undefined) {
+      loadSubDistrictData(id);
+      // eslint-disable-next-line
+    }
   }, [id]);
 
   const loadSubDistrictData = async (id) => {

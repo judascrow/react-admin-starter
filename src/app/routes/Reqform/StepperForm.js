@@ -1,16 +1,19 @@
 import React, { useContext, useState } from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { makeStyles } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
 
 import { useForm } from "react-hook-form";
 
 import { StoreContext } from "app/context/store";
+import { createReqform } from "actions/Reqform";
+
 import StepPersonal from "./StepPersonal";
 import StepAddress from "./StepAddress";
 import StepWork from "./StepWork";
@@ -40,8 +43,9 @@ function getSteps() {
   ];
 }
 
-const StepperForm = () => {
+const StepperForm = (props) => {
   const classes = useStyles();
+  const { createReqform } = props;
   const { personal, address, work, regis } = useContext(StoreContext);
   const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
@@ -54,9 +58,9 @@ const StepperForm = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
-  };
+  // const handleReset = () => {
+  //   setActiveStep(0);
+  // };
 
   const { register, errors, handleSubmit, control, watch, setValue } = useForm({
     mode: "onChange",
@@ -79,6 +83,25 @@ const StepperForm = () => {
       address[1](data);
       work[1](data);
       regis[1](data);
+      console.log(personal[0]);
+      const reqFormData = {
+        ...personal[0],
+        ...address[0],
+        ...work[0],
+        ...regis[0],
+      };
+      reqFormData.cardExpire = personal[0].cardExpire;
+      reqFormData.birthDate = personal[0].birthDate;
+      console.log(reqFormData);
+      const formData = new FormData();
+      const reqFormDataArray = Object.keys(reqFormData);
+
+      reqFormDataArray.map((key) => {
+        formData.append(key, reqFormData[key]);
+        return key;
+      });
+
+      createReqform(formData);
     }
     handleNext();
   };
@@ -143,11 +166,17 @@ const StepperForm = () => {
         <div className="row">
           <div className="col-lg-12">
             {activeStep === steps.length ? (
-              <div>
-                <Typography className={classes.instructions}>
-                  All steps completed
+              <div style={{ marginTop: "50" }}>
+                <Typography
+                  className={classes.instructions}
+                  color="primary"
+                  align="center"
+                  variant="h5"
+                >
+                  ส่งข้อมูลคำขอขึ้นทะเบียนของท่านเรียบร้อยแล้ว
+                  กรุณาตรวจสอบสถานะการขึ้นทะเบียนจากหน้าหลัก
                 </Typography>
-                <Button onClick={handleReset}>Reset</Button>
+                {/* <Button onClick={handleReset}>Reset</Button> */}
               </div>
             ) : (
               <div>
@@ -175,10 +204,14 @@ const StepperForm = () => {
   );
 };
 
+StepperForm.propTypes = {
+  createReqform: PropTypes.func.isRequired,
+};
+
 const mapStateToProps = (state) => {
   return {
     user: state.auth.authUser,
   };
 };
 
-export default connect(mapStateToProps, {})(StepperForm);
+export default connect(mapStateToProps, { createReqform })(StepperForm);

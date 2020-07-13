@@ -27,6 +27,7 @@ export default {
     danger: "orange",
   },
   typography: {
+    fontFamily: '"Sarabun", "Arial", sans-serif',
     button: {
       fontWeight: 400,
       textAlign: "capitalize",

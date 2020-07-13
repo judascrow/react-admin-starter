@@ -7,6 +7,12 @@ export const DELETE_USER = "DELETE_USER";
 
 export const GET_ROLES = "GET_ROLES";
 
+export const GET_REQFORMS = "GET_REQFORMS";
+export const GET_REQFORM = "GET_REQFORM";
+export const ADD_REQFORM = "ADD_REQFORM";
+export const UPDATE_REQFORM = "UPDATE_REQFORM";
+export const DELETE_REQFORM = "DELETE_REQFORM";
+
 // Customizer const
 export const TOGGLE_COLLAPSED_NAV = "toggle_collapse_menu";
 export const DRAWER_TYPE = "drawer_type";

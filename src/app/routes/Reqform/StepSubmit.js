@@ -327,7 +327,7 @@ const StepSubmit = ({ formProps: { register, errors }, data }) => {
   const listsDataWorkBoss = [
     {
       title: "ชื่อ-นามสกุล",
-      data: bossFirstName + bossLastName,
+      data: bossFirstName + " " + bossLastName,
     },
     {
       title: "บ้านเลขที่",

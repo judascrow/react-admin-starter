@@ -18,9 +18,7 @@ const RolesSelectOptions = ({
 
   const loadRolesData = async () => {
     const result = await getAllRoles();
-    console.log(result);
     if (result && result.data.data !== undefined) {
-      console.log(result);
       const options = result.data.data.map((b) => {
         return {
           value: b.id,

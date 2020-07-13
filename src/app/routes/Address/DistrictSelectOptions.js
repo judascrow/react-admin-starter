@@ -19,7 +19,7 @@ const DistrictSelectOptions = ({
   }, [provinceID]);
 
   const loadDistrictsData = async (provinceID) => {
-    if (provinceID !== undefined) {
+    if (provinceID !== "" && provinceID !== undefined && provinceID != null) {
       const result = await getAllDistricts(provinceID);
 
       if (result && result.data.data !== undefined) {

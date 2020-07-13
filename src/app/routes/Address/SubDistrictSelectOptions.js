@@ -20,8 +20,14 @@ const SubDistrictSelectOptions = ({
   }, [provinceID, districtID]);
 
   const loadSubDistrictsData = async (provinceID, districtID) => {
-    console.log(provinceID, districtID);
-    if (provinceID !== undefined && districtID !== undefined) {
+    if (
+      provinceID !== "" &&
+      districtID !== "" &&
+      provinceID !== undefined &&
+      districtID !== undefined &&
+      provinceID !== null &&
+      districtID !== null
+    ) {
       const result = await getAllSubDistricts(provinceID, districtID);
 
       if (result && result.data.data !== undefined) {
