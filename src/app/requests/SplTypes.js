@@ -20,3 +20,23 @@ export const getAllSplSubTypes = (splTypeID) => {
 
   return axios.get(`spltypes/${splTypeID}/splsubtypes`, config);
 };
+
+export const GetSplTypeByID = (id) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("token"),
+    },
+  };
+  return axios.get(`spltype/${id}`, config);
+};
+
+export const GetSplSubTypeByID = (id) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: localStorage.getItem("token"),
+    },
+  };
+  return axios.get(`splsubtype/${id}`, config);
+};

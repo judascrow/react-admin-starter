@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-
+import { withRouter } from "react-router-dom";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
@@ -19,6 +19,8 @@ import StepAddress from "./StepAddress";
 import StepWork from "./StepWork";
 import StepRegis from "./StepRegis";
 import StepSubmit from "./StepSubmit";
+
+import { getUser } from "actions/Auth";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,7 +47,7 @@ function getSteps() {
 
 const StepperForm = (props) => {
   const classes = useStyles();
-  const { createReqform } = props;
+  const { createReqform, getUser } = props;
   const { personal, address, work, regis } = useContext(StoreContext);
   const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
@@ -72,17 +74,21 @@ const StepperForm = (props) => {
     data.birthDate = data.birthDate ? new Date(data.birthDate).toJSON() : null;
     if (activeStep === 0) {
       personal[1](data);
+      handleNext();
     } else if (activeStep === 1) {
       address[1](data);
+      handleNext();
     } else if (activeStep === 2) {
       work[1](data);
+      handleNext();
     } else if (activeStep === 3) {
       regis[1](data);
+      handleNext();
     } else if (activeStep === 4) {
-      personal[1](data);
-      address[1](data);
-      work[1](data);
-      regis[1](data);
+      // personal[1](data);
+      // address[1](data);
+      // work[1](data);
+      // regis[1](data);
       console.log(personal[0]);
       const reqFormData = {
         ...personal[0],
@@ -101,9 +107,16 @@ const StepperForm = (props) => {
         return key;
       });
 
-      createReqform(formData);
+      createReqform(formData)
+        .then((result) => {
+          if (result !== undefined) {
+            getUser();
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
-    handleNext();
   };
 
   function getStepContent(stepIndex) {
@@ -165,38 +178,23 @@ const StepperForm = (props) => {
 
         <div className="row">
           <div className="col-lg-12">
-            {activeStep === steps.length ? (
-              <div style={{ marginTop: "50" }}>
-                <Typography
-                  className={classes.instructions}
-                  color="primary"
-                  align="center"
-                  variant="h5"
+            <div>
+              <Typography component={"span"} className={classes.instructions}>
+                {getStepContent(activeStep)}
+              </Typography>
+              <div style={{ marginTop: "40px" }}>
+                <Button
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  className={classes.backButton}
                 >
-                  ส่งข้อมูลคำขอขึ้นทะเบียนของท่านเรียบร้อยแล้ว
-                  กรุณาตรวจสอบสถานะการขึ้นทะเบียนจากหน้าหลัก
-                </Typography>
-                {/* <Button onClick={handleReset}>Reset</Button> */}
+                  ย้อนกลับ
+                </Button>
+                <Button type="submit" variant="contained" color="primary">
+                  {activeStep === steps.length - 1 ? "ส่งข้อมูล" : "ถัดไป"}
+                </Button>
               </div>
-            ) : (
-              <div>
-                <Typography component={"span"} className={classes.instructions}>
-                  {getStepContent(activeStep)}
-                </Typography>
-                <div style={{ marginTop: "40px" }}>
-                  <Button
-                    disabled={activeStep === 0}
-                    onClick={handleBack}
-                    className={classes.backButton}
-                  >
-                    ย้อนกลับ
-                  </Button>
-                  <Button type="submit" variant="contained" color="primary">
-                    {activeStep === steps.length - 1 ? "ส่งข้อมูล" : "ถัดไป"}
-                  </Button>
-                </div>
-              </div>
-            )}
+            </div>
           </div>
         </div>
       </form>
@@ -206,12 +204,13 @@ const StepperForm = (props) => {
 
 StepperForm.propTypes = {
   createReqform: PropTypes.func.isRequired,
+  getUser: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.auth.authUser,
-  };
-};
+const mapStateToProps = (state) => ({
+  user: state.auth.authUser,
+});
 
-export default connect(mapStateToProps, { createReqform })(StepperForm);
+export default connect(mapStateToProps, { createReqform, getUser })(
+  withRouter(StepperForm)
+);

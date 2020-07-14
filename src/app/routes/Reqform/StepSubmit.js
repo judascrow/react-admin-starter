@@ -9,6 +9,8 @@ import {
   GetSubDistrictName,
 } from "app/routes/Address/Address";
 
+import { GetSplType, GetSplSubType } from "app/routes/SplTypes/SplTypes";
+
 const StepSubmit = ({ formProps: { register, errors }, data }) => {
   const { personal, address, work, regis } = data;
   const {
@@ -378,11 +380,11 @@ const StepSubmit = ({ formProps: { register, errors }, data }) => {
   const listsDataRegis = [
     {
       title: "ด้าน",
-      data: splTypeID,
+      data: GetSplType(splTypeID),
     },
     {
       title: "สาขา",
-      data: splSubTypeID,
+      data: GetSplSubType(splSubTypeID),
     },
     {
       title: "โดยมีคุณวุฒิ",

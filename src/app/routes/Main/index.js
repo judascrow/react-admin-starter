@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import ContainerHeader from "components/ContainerHeader";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
@@ -23,6 +24,7 @@ const Main = (props) => {
     "https://image.freepik.com/free-vector/businessman-character-avatar-icon-vector-illustration-design_24877-18271.jpg";
   return (
     <div className="app-wrapper">
+      {console.log(user)}
       <div className="dashboard animated slideInUpTiny animation-duration-3">
         <ContainerHeader match={props.match} title={"หน้าหลัก"} />
         <div className="page-heading d-sm-flex justify-content-sm-between align-items-sm-center">
@@ -75,7 +77,7 @@ const Main = (props) => {
                   </Typography>
                   <Typography variant="body1" gutterBottom>
                     สถานะผู้เชี่ยวชาญ :{" "}
-                    {user && user.profile.isSpecialist ? (
+                    {user && user.profile && user.profile.isSpecialist ? (
                       <span>เป็นผู้เชี่ยวชาญ</span>
                     ) : (
                       <span className={classes.spanDanger}>
@@ -87,7 +89,9 @@ const Main = (props) => {
                     สถานะการขึ้นทะเบียน :{" "}
                     {user && user.profile ? (
                       <span className={classes.span}>
-                        ส่งข้อมูลแล้ว รอการตรวจสอบ
+                        {user.profile.statusReqform === "checking"
+                          ? "ส่งข้อมูลแล้ว รอการตรวจสอบ"
+                          : ""}
                       </span>
                     ) : (
                       <span className={classes.spanDanger}>
@@ -105,10 +109,8 @@ const Main = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.auth.authUser,
-  };
-};
+const mapStateToProps = (state) => ({
+  user: state.auth.authUser,
+});
 
-export default connect(mapStateToProps, {})(Main);
+export default connect(mapStateToProps, {})(withRouter(Main));
