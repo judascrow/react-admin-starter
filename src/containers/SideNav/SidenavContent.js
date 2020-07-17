@@ -112,14 +112,13 @@ class SidenavContent extends Component {
             <li className="menu no-arrow">
               <NavLink to="/app/dashboard">
                 <i className="zmdi zmdi-view-dashboard zmdi-hc-fw" />
-                <span className="nav-text">
-                  <IntlMessages id="pages.dashboard" />{" "}
-                </span>
+                <span className="nav-text">หน้าหลัก</span>
               </NavLink>
             </li>
           ) : (
             ""
           )}
+          <li className="nav-header">สิทธิ์การใช้งาน</li>
           {this.props.user && this.props.user.roleId !== 3 ? (
             <li className="menu no-arrow">
               <NavLink to="/app/users">

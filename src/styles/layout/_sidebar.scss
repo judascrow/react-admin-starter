@@ -51,12 +51,14 @@ ul.nav-menu li {
 
 ul.nav-menu li.menu {
   & + .nav-header {
-    margin-top: 30px;
+    // margin-top: 30px;
+    margin-top: 20px;
     margin-right: 20px;
     margin-left: 20px;
     padding-left: 0;
     padding-right: 0;
-    padding-top: 40px;
+    // padding-top: 40px;
+    padding-top: 20px;
     border-top: solid $border-width lighten($sidebar-bg, 6%);
   }
   & .sub-menu {
@@ -170,7 +172,7 @@ ul.nav-menu li.menu > a:before {
   display: inline-block;
   float: right;
   font: {
-    family: 'Material-Design-Iconic-Font';
+    family: "Material-Design-Iconic-Font";
     size: 15px;
   }
   margin-left: 10px;

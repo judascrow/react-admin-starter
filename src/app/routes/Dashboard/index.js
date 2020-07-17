@@ -1,23 +1,19 @@
 import React from "react";
 import { Bar, BarChart, ResponsiveContainer } from "recharts";
 
-import { article, authors, chartData, newArticlesData } from "./data";
-import PopularArticles from "components/dashboard/news/PopularArticals";
+import { chartData, newArticlesData } from "./data";
 import ReportBox from "components/ReportBox/index";
 import ContainerHeader from "components/ContainerHeader/index";
-import CardHeader from "components/dashboard/Common/CardHeader/index";
-import UserDetailTable from "components/dashboard/Common/UserDetailTable";
 import IntlMessages from "util/IntlMessages";
 import CustomLineChart from "components/CustomLineChart/index";
+
+import ReqformTable from "./ReqformTable";
 
 const Dashboard = (props) => {
   return (
     <div className="app-wrapper">
       <div className="dashboard animated slideInUpTiny animation-duration-3">
-        <ContainerHeader
-          match={props.match}
-          title={<IntlMessages id="pages.dashboard" />}
-        />
+        <ContainerHeader match={props.match} title={"หน้าหลัก"} />
 
         <div className="row">
           <div className="col-lg-3 col-sm-6 col-12">
@@ -118,38 +114,8 @@ const Dashboard = (props) => {
             </ReportBox>
           </div>
         </div>
-
-        <div className="row">
-          <div className="col-lg-5">
-            <div className="jr-card jr-full-card">
-              <CardHeader
-                heading={<IntlMessages id="dashboard.popularAuthors" />}
-                subHeading={<IntlMessages id="dashboard.authorsWith" />}
-              />
-
-              <div className="jr-card-body">
-                <UserDetailTable data={authors} />
-              </div>
-            </div>
-          </div>
-
-          <div className="col-lg-7">
-            <div className="jr-card pb-2">
-              <CardHeader
-                heading={<IntlMessages id="dashboard.popularArticles" />}
-                subHeading={<IntlMessages id="dashboard.loremIpsum" />}
-                styleName="mb-4"
-              />
-
-              <div className="jr-card-body">
-                <div className="row">
-                  {article.map((article, index) => (
-                    <PopularArticles key={index} article={article} />
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
+        <div>
+          <ReqformTable />
         </div>
       </div>
     </div>

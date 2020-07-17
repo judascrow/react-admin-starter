@@ -4,8 +4,8 @@ import {
   GET_REQFORMS,
   ADD_REQFORM,
   SHOW_MESSAGE,
-  UPDATE_REQFORM,
-  DELETE_REQFORM,
+  // UPDATE_REQFORM,
+  // DELETE_REQFORM,
 } from "../constants/ActionTypes";
 import axios from "util/Api";
 
@@ -16,33 +16,33 @@ export const setInitUrl = (url) => {
   };
 };
 
-// Get users
-// export const getReqforms = () => async (dispatch) => {
-//   try {
-//     const config = {
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: localStorage.getItem("token"),
-//       },
-//     };
+// Get reqforms
+export const getReqforms = () => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: localStorage.getItem("token"),
+      },
+    };
 
-//     const res = await axios.get(`users?pageSize=500`, config);
+    const res = await axios.get(`reqforms`, config);
 
-//     dispatch({
-//       type: GET_USERS,
-//       payload: res.data,
-//     });
-//   } catch (err) {
-//     const errors = err.response;
+    dispatch({
+      type: GET_REQFORMS,
+      payload: res.data,
+    });
+  } catch (err) {
+    const errors = err.response;
 
-//     if (errors) {
-//       dispatch({
-//         type: FETCH_ERROR,
-//         payload: errors.message,
-//       });
-//     }
-//   }
-// };
+    if (errors) {
+      dispatch({
+        type: FETCH_ERROR,
+        payload: errors.message,
+      });
+    }
+  }
+};
 
 export const createReqform = (reqform) => async (dispatch) => {
   const config = {
