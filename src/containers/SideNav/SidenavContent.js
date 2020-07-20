@@ -1,19 +1,18 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import { NavLink, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import IntlMessages from "util/IntlMessages";
 import CustomScrollbars from "util/CustomScrollbars";
 
-class SidenavContent extends Component {
-  componentDidMount() {
-    const { history } = this.props;
-    const that = this;
+const SidenavContent = (props) => {
+  useEffect(() => {
+    const { history } = props;
     const pathname = `${history.location.pathname}`; // get current path
 
     const menuLi = document.getElementsByClassName("menu");
     for (let i = 0; i < menuLi.length; i++) {
       menuLi[i].onclick = function(event) {
-        const parentLiEle = that.closest(this, "li");
+        const parentLiEle = closest(this, "li");
         if (menuLi[i].classList.contains("menu") && parentLiEle !== null) {
           event.stopPropagation();
 
@@ -24,7 +23,7 @@ class SidenavContent extends Component {
           }
         } else {
           for (let j = 0; j < menuLi.length; j++) {
-            const parentLi = that.closest(this, "li");
+            const parentLi = closest(this, "li");
             if (
               menuLi[j] !== this &&
               (parentLi === null || !parentLi.classList.contains("open"))
@@ -44,31 +43,31 @@ class SidenavContent extends Component {
 
     const activeLi = document.querySelector('a[href="' + pathname + '"]'); // select current a element
     try {
-      const activeNav = this.closest(activeLi, "ul"); // select closest ul
+      const activeNav = closest(activeLi, "ul"); // select closest ul
       if (activeNav.classList.contains("sub-menu")) {
-        this.closest(activeNav, "li").classList.add("open");
+        closest(activeNav, "li").classList.add("open");
       } else {
-        this.closest(activeLi, "li").classList.add("open");
+        closest(activeLi, "li").classList.add("open");
       }
     } catch (error) {}
-  }
+  }, [props]);
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    const { history } = nextProps;
+  useEffect(() => {
+    const { history } = props;
     const pathname = `${history.location.pathname}`; // get current path
 
     const activeLi = document.querySelector('a[href="' + pathname + '"]'); // select current a element
     try {
-      const activeNav = this.closest(activeLi, "ul"); // select closest ul
+      const activeNav = closest(activeLi, "ul"); // select closest ul
       if (activeNav.classList.contains("sub-menu")) {
-        this.closest(activeNav, "li").classList.add("open");
+        closest(activeNav, "li").classList.add("open");
       } else {
-        this.closest(activeLi, "li").classList.add("open");
+        closest(activeLi, "li").classList.add("open");
       }
     } catch (error) {}
-  }
+  }, [props]);
 
-  closest(el, selector) {
+  const closest = (el, selector) => {
     try {
       let matchesFn;
       // find vendor prefix
@@ -99,68 +98,68 @@ class SidenavContent extends Component {
     } catch (e) {}
 
     return null;
-  }
-
-  render() {
-    return (
-      <CustomScrollbars className=" scrollbar">
-        <ul className="nav-menu">
-          <li className="nav-header">
-            <IntlMessages id="sidebar.main" />
-          </li>
-          {this.props.user && this.props.user.roleId !== 3 ? (
-            <li className="menu no-arrow">
-              <NavLink to="/app/dashboard">
-                <i className="zmdi zmdi-view-dashboard zmdi-hc-fw" />
-                <span className="nav-text">หน้าหลัก</span>
-              </NavLink>
-            </li>
-          ) : (
-            ""
-          )}
-          <li className="nav-header">สิทธิ์การใช้งาน</li>
-          {this.props.user && this.props.user.roleId !== 3 ? (
-            <li className="menu no-arrow">
-              <NavLink to="/app/users">
-                <i className="zmdi zmdi-account-box-o zmdi-hc-fw" />
-                <span className="nav-text">
-                  <IntlMessages id="users.main" />{" "}
-                </span>
-              </NavLink>
-            </li>
-          ) : (
-            ""
-          )}
-          {this.props.user && this.props.user.roleId === 3 ? (
-            <li className="menu no-arrow">
-              <NavLink to="/app/main">
-                <i className="zmdi zmdi-home zmdi-hc-fw" />
-                <span className="nav-text">หน้าหลัก </span>
-              </NavLink>
-            </li>
-          ) : (
-            ""
-          )}
-          {this.props.user && this.props.user.roleId === 3 ? (
-            <li className="menu no-arrow">
-              <NavLink to="/app/reqform">
-                <i className="zmdi zmdi-assignment zmdi-hc-fw" />
-                <span className="nav-text">คำขอขึ้นทะเบียน </span>
-              </NavLink>
-            </li>
-          ) : (
-            ""
-          )}
-        </ul>
-      </CustomScrollbars>
-    );
-  }
-}
-
-const mapStateToProps = (state) => {
-  return {
-    user: state.auth.authUser,
   };
+
+  return (
+    <CustomScrollbars className=" scrollbar">
+      <ul className="nav-menu">
+        <li className="nav-header">
+          <IntlMessages id="sidebar.main" />
+        </li>
+        {props.user && props.user.roleId !== 3 ? (
+          <li className="menu no-arrow">
+            <NavLink to="/app/dashboard">
+              <i className="zmdi zmdi-view-dashboard zmdi-hc-fw" />
+              <span className="nav-text">หน้าหลัก</span>
+            </NavLink>
+          </li>
+        ) : (
+          ""
+        )}
+        {props.user && props.user.roleId !== 3 ? (
+          <li className="nav-header">สิทธิ์การใช้งาน</li>
+        ) : (
+          ""
+        )}
+        {props.user && props.user.roleId !== 3 ? (
+          <li className="menu no-arrow">
+            <NavLink to="/app/users">
+              <i className="zmdi zmdi-account-box-o zmdi-hc-fw" />
+              <span className="nav-text">
+                <IntlMessages id="users.main" />{" "}
+              </span>
+            </NavLink>
+          </li>
+        ) : (
+          ""
+        )}
+        {props.user && props.user.roleId === 3 ? (
+          <li className="menu no-arrow">
+            <NavLink to="/app/main">
+              <i className="zmdi zmdi-home zmdi-hc-fw" />
+              <span className="nav-text">หน้าหลัก </span>
+            </NavLink>
+          </li>
+        ) : (
+          ""
+        )}
+        {props.user && props.user.roleId === 3 ? (
+          <li className="menu no-arrow">
+            <NavLink to="/app/reqform">
+              <i className="zmdi zmdi-assignment zmdi-hc-fw" />
+              <span className="nav-text">คำขอขึ้นทะเบียน </span>
+            </NavLink>
+          </li>
+        ) : (
+          ""
+        )}
+      </ul>
+    </CustomScrollbars>
+  );
 };
+
+const mapStateToProps = (state) => ({
+  user: state.auth.authUser,
+});
 
 export default connect(mapStateToProps, {})(withRouter(SidenavContent));

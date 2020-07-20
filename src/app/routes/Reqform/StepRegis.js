@@ -25,7 +25,37 @@ const StepRegis = ({
     regisEverNopassDesc,
   } = data[0];
 
+  let {
+    fileAttachIdcard,
+    fileAttachHouse,
+    fileAttachGovCard,
+    fileAttachQualification,
+  } = data[0];
+
   const watchSplTypeID = watch("splTypeID");
+
+  const onChangeFileHandler = (event) => {
+    switch (event.target.name) {
+      case "fileAttachIdcard": {
+        fileAttachIdcard = event.target.files[0];
+        return;
+      }
+      case "fileAttachHouse": {
+        fileAttachHouse = event.target.files[0];
+        return;
+      }
+      case "fileAttachGovCard": {
+        fileAttachGovCard = event.target.files[0];
+        return;
+      }
+      case "fileAttachQualification": {
+        fileAttachQualification = event.target.files[0];
+        return;
+      }
+      default:
+        return;
+    }
+  };
 
   return (
     <Fragment>
@@ -214,6 +244,131 @@ const StepRegis = ({
                   <AlertText>
                     <IntlMessages id="input.required" />
                   </AlertText>
+                )
+              }
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-lg-4" style={{ marginTop: "20px" }}>
+            <Typography variant="h6">เอกสารแนบ</Typography>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-lg-4" style={{ marginTop: "20px" }}>
+            <Typography>1. สำเนาบัตรประจำตัวประชาชน</Typography>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-lg-6">
+            <TextFieldCT
+              type="file"
+              id="fileAttachIdcard"
+              name="fileAttachIdcard"
+              defaultValue={
+                fileAttachIdcard && fileAttachIdcard.length > 0
+                  ? fileAttachIdcard.name
+                  : ""
+              }
+              error={!!errors.fileAttachIdcard}
+              onChange={onChangeFileHandler}
+              inputRef={register({
+                // required: true,
+              })}
+              helperText={
+                errors.fileAttachIdcard &&
+                errors.fileAttachIdcard.type === "required" && (
+                  <AlertText>กรุณาเลือกไฟล์</AlertText>
+                )
+              }
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-lg-4" style={{ marginTop: "20px" }}>
+            <Typography>2. สำเนาทะเบียนบ้าน</Typography>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-lg-6">
+            <TextFieldCT
+              type="file"
+              id="fileAttachHouse"
+              name="fileAttachHouse"
+              defaultValue={
+                fileAttachHouse && fileAttachHouse.length > 0
+                  ? fileAttachHouse.name
+                  : ""
+              }
+              error={!!errors.fileAttachHouse}
+              onChange={onChangeFileHandler}
+              inputRef={register({
+                // required: true,
+              })}
+              helperText={
+                errors.fileAttachHouse &&
+                errors.fileAttachHouse.type === "required" && (
+                  <AlertText>กรุณาเลือกไฟล์</AlertText>
+                )
+              }
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-lg-4" style={{ marginTop: "20px" }}>
+            <Typography>3. สำเนาบัตรประจำตัวข้าราชการ</Typography>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-lg-6">
+            <TextFieldCT
+              type="file"
+              id="fileAttachGovCard"
+              name="fileAttachGovCard"
+              defaultValue={
+                fileAttachGovCard && fileAttachGovCard.length > 0
+                  ? fileAttachGovCard.name
+                  : ""
+              }
+              error={!!errors.fileAttachGovCard}
+              onChange={onChangeFileHandler}
+              inputRef={register({
+                // required: true,
+              })}
+              helperText={
+                errors.fileAttachGovCard &&
+                errors.fileAttachGovCard.type === "required" && (
+                  <AlertText>กรุณาเลือกไฟล์</AlertText>
+                )
+              }
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-lg-4" style={{ marginTop: "20px" }}>
+            <Typography>4. สำเนาหนังสือแสดงคุณวุฒิ</Typography>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-lg-6">
+            <TextFieldCT
+              type="file"
+              id="fileAttachQualification"
+              name="fileAttachQualification"
+              defaultValue={
+                fileAttachQualification && fileAttachQualification.length > 0
+                  ? fileAttachQualification.name
+                  : ""
+              }
+              error={!!errors.fileAttachQualification}
+              onChange={onChangeFileHandler}
+              inputRef={register({
+                // required: true,
+              })}
+              helperText={
+                errors.fileAttachQualification &&
+                errors.fileAttachQualification.type === "required" && (
+                  <AlertText>กรุณาเลือกไฟล์</AlertText>
                 )
               }
             />

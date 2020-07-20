@@ -161,6 +161,10 @@ export const StoreContextProvider = ({ user, children }) => {
     regisEverPassNo: 123456,
     regisEverNopass: null,
     regisEverNopassDesc: undefined,
+    fileAttachIdcard: undefined,
+    fileAttachHouse: undefined,
+    fileAttachGovCard: undefined,
+    fileAttachQualification: undefined,
   });
 
   // const [regis, setRegis] = useState({

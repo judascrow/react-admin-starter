@@ -47,7 +47,7 @@ export const getReqforms = () => async (dispatch) => {
 export const createReqform = (reqform) => async (dispatch) => {
   const config = {
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "multipart/form-data",
       Authorization: localStorage.getItem("token"),
     },
   };

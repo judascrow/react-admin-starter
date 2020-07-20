@@ -89,7 +89,7 @@ const StepperForm = (props) => {
       // address[1](data);
       // work[1](data);
       // regis[1](data);
-      console.log(personal[0]);
+
       const reqFormData = {
         ...personal[0],
         ...address[0],
@@ -98,12 +98,33 @@ const StepperForm = (props) => {
       };
       reqFormData.cardExpire = personal[0].cardExpire;
       reqFormData.birthDate = personal[0].birthDate;
-      console.log(reqFormData);
+
+      reqFormData.fileAttachIdcard =
+        regis[0].fileAttachIdcard && regis[0].fileAttachIdcard.length > 0
+          ? regis[0].fileAttachIdcard[0]
+          : "";
+      reqFormData.fileAttachHouse =
+        regis[0].fileAttachHouse && regis[0].fileAttachHouse.length > 0
+          ? regis[0].fileAttachHouse[0]
+          : "";
+      reqFormData.fileAttachGovCard =
+        regis[0].fileAttachGovCard && regis[0].fileAttachGovCard.length > 0
+          ? regis[0].fileAttachGovCard[0]
+          : "";
+      reqFormData.fileAttachQualification =
+        regis[0].fileAttachQualification &&
+        regis[0].fileAttachQualification.length > 0
+          ? regis[0].fileAttachQualification[0]
+          : "";
+
       const formData = new FormData();
       const reqFormDataArray = Object.keys(reqFormData);
 
       reqFormDataArray.map((key) => {
-        formData.append(key, reqFormData[key]);
+        if (reqFormData[key] !== "") {
+          formData.append(key, reqFormData[key]);
+        }
+
         return key;
       });
 

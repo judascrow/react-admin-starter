@@ -2,7 +2,9 @@ import React, { Fragment } from "react";
 import moment from "moment";
 import "moment/locale/th";
 import Typography from "@material-ui/core/Typography";
-import { Divider } from "@material-ui/core";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import Divider from "@material-ui/core/Divider";
 import {
   GetProvinceName,
   GetDistrictName,
@@ -97,6 +99,10 @@ const StepSubmit = ({ formProps: { register, errors }, data }) => {
     regisEverPassNo,
     // regisEverNopass,
     regisEverNopassDesc,
+    fileAttachIdcard,
+    fileAttachHouse,
+    fileAttachGovCard,
+    fileAttachQualification,
   } = regis[0];
 
   const listsDataPersonal = [
@@ -412,6 +418,33 @@ const StepSubmit = ({ formProps: { register, errors }, data }) => {
     },
   ];
 
+  const listsDataFile = [
+    {
+      title: "1. สำเนาบัตรประจำตัวประชาชน",
+      data:
+        fileAttachIdcard && fileAttachIdcard[0] ? fileAttachIdcard[0].name : "",
+    },
+    {
+      title: "2. สำเนาทะเบียนบ้าน",
+      data:
+        fileAttachHouse && fileAttachHouse[0] ? fileAttachHouse[0].name : "",
+    },
+    {
+      title: "3. สำเนาบัตรประจำตัวข้าราชการ",
+      data:
+        fileAttachGovCard && fileAttachGovCard[0]
+          ? fileAttachGovCard[0].name
+          : "",
+    },
+    {
+      title: "4. สำเนาหนังสือแสดงคุณวุฒิ",
+      data:
+        fileAttachQualification && fileAttachQualification[0]
+          ? fileAttachQualification[0].name
+          : "",
+    },
+  ];
+
   return (
     <Fragment>
       <div className="col-lg-12 d-flex flex-column order-lg-2">
@@ -570,7 +603,7 @@ const StepSubmit = ({ formProps: { register, errors }, data }) => {
           ข้อมูลการขอขึ้นทะเบียน
         </Typography>
         <div className="row">
-          <div className="col-lg-12">
+          <div className="col-lg-6">
             <Typography color="secondary" variant="body1" gutterBottom>
               มีความประสงค์จะขอขึ้นทะเบียนเป็นผู้เชี่ยวชาญของศาล
             </Typography>
@@ -590,7 +623,89 @@ const StepSubmit = ({ formProps: { register, errors }, data }) => {
               );
             })}
           </div>
+          <div className="col-lg-6">
+            <Typography color="secondary" variant="body1" gutterBottom>
+              เอกสารแนบ
+            </Typography>
+            {listsDataFile.map((d, i) => {
+              return (
+                <div className="row" key={i}>
+                  <div className="col-lg-12">
+                    <Typography
+                      variant="body2"
+                      style={{ whiteSpace: "pre-line" }}
+                      gutterBottom
+                    >
+                      {d.title}: <b>{d.data}</b>
+                    </Typography>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
+        <Divider style={{ marginTop: "15px" }} />
+        <div className="row">
+          <div className="col-lg-12">
+            <Typography
+              variant="subtitle2"
+              color="secondary"
+              style={{ marginTop: "15px" }}
+              gutterBottom
+            >
+              ขอรับรองว่าข้าพเจ้าเป็นบุคคลที่มีคุณสมบัติและไม่มีลักษณะต้องห้ามตามข้อบังคับประธานศาลฎีกา
+              ว่าด้วยผู้เชี่ยวชาญของศาลยุติธรรม พ.ศ. 2560 ข้อที่ 7 ดังต่อไปนี้
+            </Typography>
+            <Typography variant="body2" gutterBottom>
+              (1) มีอายุไม่ต่ำกว่า 20 ปีบริบูรณ์
+            </Typography>
+            <Typography variant="body2" gutterBottom>
+              (2) เป็นผู้มีความเชี่ยวชาญ
+              โดยมีประสบการณ์ในทางที่ขอขึ้นทะเบียนเป็นเวลาไม่น้อยกว่า 5 ปี
+            </Typography>
+            <Typography variant="body2" gutterBottom>
+              (3) ไม่เป็นผู้มีความประพฤติเสื่อมเสียหรือบกพร่องในศีลธรรมอันดี
+            </Typography>
+            <Typography variant="body2" gutterBottom>
+              (4) ไม่เป็นบุคคลล้มละลาย
+            </Typography>
+            <Typography variant="body2" gutterBottom>
+              (5) ไม่เคยต้องโทษจำคุกโดยคำพิพากษาถึงที่สุดให้จำคุก
+              เว้นแต่เป็นโทษสำหรับความผิดที่ได้กระทำโดยประมาทหรือความผิดลหุโทษ
+            </Typography>
+            <Typography variant="body2" gutterBottom>
+              (6) ไม่เป็นคนไร้ความสามารถ คนเสมือนไร้ความสามารถ
+              คนวิกลจริตหรือจิตฟั่นเฟือนไม่สมประกอบ
+            </Typography>
+            <Typography variant="body2" gutterBottom>
+              (4) ไม่เป็นบุคคลล้มละลาย
+            </Typography>
+            <Typography variant="body2" gutterBottom>
+              (4) ไม่เป็นบุคคลล้มละลาย
+            </Typography>
+            <Typography variant="body2" gutterBottom>
+              (7) ไม่เคยถูกเพิกถอนทะเบียนตามข้อ 23 (4)
+            </Typography>
+            <Typography variant="body2" gutterBottom>
+              (8) กรณีเป็นผู้ประกอบวิชาชีพที่มีองค์กรควบคุมวิชาชีพ
+              ไม่เคยถูกเพิกถอนใบอนุญาตหรือประฟฤคิผิดในจรรยาบรรณวิชาชีพ
+            </Typography>
+
+            <FormControlLabel
+              control={
+                <Checkbox
+                  // checked={state.checkedB}
+                  // onChange={handleChange}
+                  name="checkedB"
+                  color="primary"
+                  required
+                />
+              }
+              label="ข้าพเจ้าขอรับรองว่า ข้อความที่ระบุมานี้เป็นความจริงทุกประการ"
+            />
+          </div>
+        </div>
+
         <Divider style={{ marginTop: "15px" }} />
       </div>
     </Fragment>
